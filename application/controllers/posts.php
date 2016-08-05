@@ -69,13 +69,10 @@ class Posts extends MY_Controller {
         $this->layout->render($view);
     }
     public function view($id) {
-        $post = $this->post_model->getWithUserId($id);
-        $view = $post->views; $view++;
-//        echo $view; exit;
+        $data['post'] = $this->post_model->getWithUserId($id);
+        $view = $data['post']->views; $view++;
         $this->db->query("UPDATE posts SET views=$view WHERE id=$id");
-        $view = $this->parser->parse('frontend/post_details',$post, TRUE);
-        $this->layout->render($view);
-
+        $this->layout->render('frontend/post_details',$data);
     }
     public function delete($id) {
         if($this->post_model->delete($id)) {

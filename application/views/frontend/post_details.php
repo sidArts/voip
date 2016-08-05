@@ -5,39 +5,39 @@
             <table class="table table-bordered">
                 <tr>
                     <th>Post Type</th>
-                    <td>{post_type}</td>
+                    <td><?php print $post->post_type; ?></td>
                 </tr>
                 <tr>
                     <th>Quality Level</th>
-                    <td>{quality_level}</td>
+                    <td><?php print $post->quality_level ?></td>
                 </tr>
                 <tr>
                     <th>Description</th>
-                    <td>{description}</td>
+                    <td><?php print $post->description ?></td>
                 </tr>
                 <tr>
                     <th>ASR</th>
-                    <td>{asr}</td>
+                    <td><?php print $post->asr ?></td>
                 </tr>
                 <tr>
                     <th>ACD</th>
-                    <td>{acd}</td>
+                    <td><?php print $post->acd ?></td>
                 </tr>
                 <tr>
                     <th>Country</th>
-                    <td>{country}</td>
+                    <td><?php print $post->country ?></td>
                 </tr>
                 <tr>
                     <th>Date Added</th>
-                    <td>{created_at}</td>
+                    <td><?php print date('F j, Y, g:i a', strtotime($post->created_at)) ?></td>
                 </tr>
                 <tr>
                     <th>Views</th>
-                    <td>{views}</td>
+                    <td><?php print $post->views ?></td>
                 </tr>
                 <tr>
                     <th>Posted By</th>
-                    <td><a href="<?php print base_url(); ?>users/info/{user_id}">{username} ({name})</a></td>
+                    <td><a href="<?php print base_url(); ?>users/info/<?php print $post->user_id ?>"><?php print $post->username ?> (<?php print $post->name ?>)</a></td>
                 </tr>
             </table>
         </div>

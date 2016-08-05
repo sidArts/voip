@@ -29,6 +29,7 @@
             <th>Last Updated</th>
             <th class="text-right">Action</th>
         </tr>
+    <?php if(!empty($posts)) { ?>
     <?php $slno = 1; ?>
     <?php foreach($posts as $value): ?>
         <tr>
@@ -50,7 +51,11 @@
                 <a href="<?php print base_url(); ?>posts/delete/<?php print $value->id; ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure want ot delete?')"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
         </tr>
-    <?php endforeach; ?>
+    <?php endforeach; } else { ?>
+        <tr>
+            <td colspan="8" class="text-center text-danger">No posts yet</td>
+        </tr>
+    <?php } ?>
     </table>
 </div>
 <script>

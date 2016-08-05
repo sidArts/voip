@@ -5,7 +5,9 @@ class Users extends MY_Controller{
     {
         parent::__construct();
         $this->load->model('member_model');
-
+        $this->load->helper('form');
+        $this->load->library("form_validation");
+        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
     }
     public function index() {
         $this->check_session_exists();
@@ -13,11 +15,9 @@ class Users extends MY_Controller{
         $this->layout->render('frontend/members_list',$data);
     }
     public function signup() {
-        $this->load->library("form_validation");
-        $this->load->helper('form');
-
-        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
-
+        if($this->session->userdata('logged_in') == TRUE) {
+            redirect(base_url().'home/');
+        }
         $rules = array(
             array(
                 "field" => "name",
@@ -53,18 +53,22 @@ class Users extends MY_Controller{
                 'field' => 'phone',
                 'label' => 'phone',
                 'rules' => 'required|numeric|max_length[10]|min_length[10]'
+            ),
+            array(
+                'field' => 'company',
+                'label' => 'Company',
+                'rules' => 'required'
             )
         );
         if($this->input->post('submit')) {
             $this->form_validation->set_rules($rules);
-
             if($this->form_validation->run() == TRUE) {
                 $form_fields = array(
                     'name' => $this->input->post('name'),
                     'email' => $this->input->post('email'),
                     'password' => sha1($this->input->post('password')),
                     'username' => $this->input->post('username'),
-                    'phone' => $this->input->post('country-code').$this->input->post('phone'),
+                    'phone' => $this->input->post('country-code').'-'.$this->input->post('phone'),
                     'company' => $this->input->post('company'),
                 );
                 if($this->member_model->insert($form_fields) == TRUE) {
@@ -76,24 +80,15 @@ class Users extends MY_Controller{
 
         $this->load->library('parser');
         $this->load->model("country_model");
-        $data = array('countries' => $this->country_model->get_all());
-        $signup_page = $this->parser->parse('frontend/signup', $data, TRUE);
-
-        $this->layout->render($signup_page, null,true);
+        $data['countries'] = $this->country_model->get_all();
+        $this->layout->render('frontend/signup', $data);
     }
 
     public function signin() {
-        $this->load->helper('form');
-        $this->load->library("form_validation");
-        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
-
-        if($this->session->userdata('logged_in')) {
-            $this->session->set_flashdata('already-logged', 'You are already logged in!');
-            redirect(base_url().'home');
+        if($this->session->userdata('logged_in') == TRUE) {
+            redirect(base_url().'home/');
         }
-
         if($this->input->post('submit')) {
-
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if($this->form_validation->run() == TRUE) {
@@ -122,14 +117,48 @@ class Users extends MY_Controller{
 
         $this->layout->render('frontend/signin');
     }
-    public function info() {
+    public function info($user_id = '') {
         $this->check_session_exists();
-        $data['info'] = $this->member_model->get($this->session->userdata('user_id'));
+        if(empty($user_id)) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $data['info'] = $this->member_model->get($user_id);
         $this->layout->render('frontend/user_info', $data);
+    }
+
+    public function updateProfile() {
+        $this->check_session_exists();
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
+        if($this->input->post('submit')) {
+            $this->form_validation->set_rules('name','Name','required');
+            $this->form_validation->set_rules('username','Username','required');
+            $this->form_validation->set_rules('email','Email','required');
+            $this->form_validation->set_rules('country-code','Country Code','required');
+            $this->form_validation->set_rules('phone','Phone','required');
+            if($this->form_validation->run() == TRUE) {
+                $form['name']     = $this->input->post('name');
+                $form['username'] = $this->input->post('username');
+                $form['email']    = $this->input->post('email');
+                $form['phone']    = $this->input->post('country-code'). '-' .$this->input->post('phone');
+                if($this->member_model->update($this->session->userdata('user_id'),$form)) {
+                    $this->session->set_flashdata('prof-update-success', 'Your profile was updated successfully!');
+                } else {
+                    $this->session->set_flashdata('prof-update-failure', 'Oops!..Something went wrong!');
+                }
+                redirect(base_url().'users/settings');
+            }
+        }
+        $this->load->model("country_model");
+        $data['countries'] = $this->country_model->get_all();
+        $data['profile'] = $this->member_model->get($this->session->userdata('user_id'));
+        $this->layout->render('frontend/signup',$data);
     }
 
     public function settings() {
         $this->check_session_exists();
+        $this->layout->render('frontend/member_settings');
     }
     public function logout() {
         $this->check_session_exists();

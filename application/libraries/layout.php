@@ -13,6 +13,7 @@ class Layout {
     private $_header;
     private $_footer;
     private $_title;
+    private $_page_heading;
     private $_css = array();
     private $_js = array();
 
