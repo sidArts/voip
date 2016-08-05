@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|images|robots\.txt|css)
+RewriteRule ^(.*)$ /voip/index.php/$1 [L]
+
+
+php_value upload_max_filesize 700M
+php_value post_max_size 700M
+php_value max_execution_time 700
+php_value max_input_time 700
+
+
