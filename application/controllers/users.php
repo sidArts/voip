@@ -118,7 +118,7 @@ class Users extends MY_Controller{
     public function verify($id, $hash) {
         $user = $this->member_model->get($id);
         $source = md5($user->email.$user->username);
-        if($source == $hash) {
+        if($source == $hash && $this->member_model->update($id,array('is_verified' => 1)) == TRUE) {
             $this->session->set_flashdata('activation-success', 'Your account has been verified..You can now login!!');
         } else {
             $this->session->set_flashdata('activation-fail', 'Oops! verification failed...Please try again!');
@@ -138,7 +138,7 @@ class Users extends MY_Controller{
                     'username' => $this->input->post('username'),
                     'password' => sha1($this->input->post('password'))
                 );
-                $user = $this->member_model->get($form_fields);
+                $user = $this->member_model->by('is_verified',1)->get($form_fields);
                 if($user) {
                     $session_data = array(
                         'user_id' => $user->id,
