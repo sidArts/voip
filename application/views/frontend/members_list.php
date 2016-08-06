@@ -2,6 +2,20 @@
     <h1 class="page-header">Members</h1>
     <div class="row">
         <div class="col-lg-7">
+        <!-- Contact mail success -->
+            <?php if($this->session->flashdata('contact-mail-success')) { ?>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php print $this->session->flashdata('contact-mail-success'); ?>
+            </div>
+            <?php } ?>
+        <!-- Contact mail failure -->
+            <?php if($this->session->flashdata('contact-mail-failure')) {?>
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php print $this->session->flashdata('contact-mail-failure'); ?>
+            </div>
+            <?php } ?>
             <table class="table table-bordered table-hover">
                 <tr>
                     <th class="text-center">Sl. no.</th>

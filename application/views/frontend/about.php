@@ -7,7 +7,13 @@
         <?php print $this->session->flashdata('signup-success'); ?>
     </div>
     <?php } ?>
-
+    <!-- Flash message for signup failure -->
+    <?php if($this->session->flashdata('signup-fail')) { ?>
+        <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php print $this->session->flashdata('signup-fail'); ?>
+        </div>
+    <?php } ?>
 <!-- Flash message for already signed in    -->
     <?php if($this->session->flashdata('already-logged')) { ?>
         <div class="alert alert-warning">
@@ -35,6 +41,7 @@
             <?php print $this->session->flashdata('login-warning'); ?>
         </div>
     <?php } ?>
+
     <div class="row">
         <div class="col-lg-7">
             <p class="bg-info" style="padding: 20px;">

@@ -4,7 +4,10 @@ class Posts extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('post_model');
+        $this->load->helper('form');
         $this->load->library('parser');
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         $this->check_session_exists();
     }
     public function index() {
@@ -14,8 +17,6 @@ class Posts extends MY_Controller {
         $this->layout->render($view);
     }
     public function add() {
-        $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         $rules = [
             [
                 'field' => 'post-type',
@@ -69,9 +70,27 @@ class Posts extends MY_Controller {
         $this->layout->render($view);
     }
     public function view($id) {
+        if($this->input->post('submit')) {
+            $email = $this->input->post('email');
+            $subject = $this->input->post('subject');
+            $message = $this->input->post('description');
+            $this->load->library('email');
+            $this->email->to($email);
+            $this->email->from($this->site_email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()) {
+                $this->session->set_flashdata('contact-mail-success','Your email has been sent!');
+            } else {
+                $this->session->set_flashdata('contact-mail-failure','Oops!..Something went wrong..Please try again!!');
+            }
+            redirect(base_url().'posts/view/'.$id);
+        }
         $data['post'] = $this->post_model->getWithUserId($id);
-        $view = $data['post']->views; $view++;
-        $this->db->query("UPDATE posts SET views=$view WHERE id=$id");
+        if($data['post']->user_id != $this->session->userdata('user_id')) {
+            $view = $data['post']->views; $view++;
+            $this->db->query("UPDATE posts SET views=$view WHERE id=$id");
+        }
         $this->layout->render('frontend/post_details',$data);
     }
     public function delete($id) {

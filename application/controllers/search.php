@@ -10,14 +10,19 @@ class Search extends MY_Controller {
         $this->load->helper('form');
         $data = [];
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if(empty($this->input->post('country')) && empty($this->input->post('category'))) {
+            if(!empty($this->input->post('country'))) {
+                $form["country"] = $this->input->post('country');
+            }
+            if(!empty($this->input->post('category'))) {
+                $form["post_type"] = $this->input->post('category');
+            }
+            if(!empty($this->input->post('quality-level'))) {
+                $form['quality_level'] = $this->input->post('quality-level');
+            }
+            if(empty($form)) {
                 $data['results'] = $this->db->get('posts')->result();
             } else {
-                $form = array(
-                    "country" => $this->input->post('country'),
-                    "post_type" => $this->input->post('category')
-                );
-                $data['results'] = $this->db->or_where($form)->get('posts')->result();
+                $data['results'] = $this->db->where($form)->get('posts')->result();
             }
         }
         $data['countries'] = $this->db->query('SELECT * FROM country')->result();

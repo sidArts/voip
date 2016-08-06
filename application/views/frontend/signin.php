@@ -7,6 +7,20 @@
             <?php print $this->session->flashdata('signin-failure'); ?>
         </div>
     <?php } ?>
+    <!-- Flash message for account verification success   -->
+    <?php if($this->session->flashdata('activation-success')) { ?>
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php print $this->session->flashdata('activation-success'); ?>
+        </div>
+    <?php } ?>
+    <!-- Flash message for account verification failure   -->
+    <?php if($this->session->flashdata('activation-fail')) { ?>
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php print $this->session->flashdata('activation-fail'); ?>
+        </div>
+    <?php } ?>
     <?php print form_open(base_url().'users/signin'); ?>
     <div class="form-group">
         <?php print form_label('Username') ?>

@@ -4,9 +4,11 @@ $user_id = $this->session->userdata('user_id');
 <div class="container">
     <div class="row">
         <div class="col-lg-5">
-            <?php if($user_id == $info->id): ?>
+            <?php if($user_id == $info->id){ ?>
             <h3 class="page-header">Account Summary</h3>
-            <?php endif; ?>
+            <?php } else { ?>
+            <h3 class="page-header">User Details</h3>
+            <?php } ?>
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>Name</th>
@@ -14,7 +16,7 @@ $user_id = $this->session->userdata('user_id');
                         <?php print $info->name; ?>
                         <?php if($user_id == $info->id): ?>
                         <div class="pull-right">
-                            <button class="btn btn-default btn-xs">
+                            <button class="btn btn-default btn-xs" onclick="showUpdateField(this)">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </button>
                         </div>

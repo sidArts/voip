@@ -11,6 +11,22 @@ class Users extends MY_Controller{
     }
     public function index() {
         $this->check_session_exists();
+        if($this->input->post('submit')) {
+            $email = $this->input->post('email');
+            $subject = $this->input->post('subject');
+            $message = $this->input->post('description');
+            $this->load->library('email');
+            $this->email->to($email);
+            $this->email->from($this->site_email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()) {
+                $this->session->set_flashdata('contact-mail-success','Your email has been sent!');
+            } else {
+                $this->session->set_flashdata('contact-mail-failure','Oops!..Something went wrong..Please try again!!');
+            }
+            redirect(base_url().'users');
+        }
         $data['members'] = $this->member_model->get_all();
         $this->layout->render('frontend/members_list',$data);
     }
@@ -71,17 +87,43 @@ class Users extends MY_Controller{
                     'phone' => $this->input->post('country-code').'-'.$this->input->post('phone'),
                     'company' => $this->input->post('company'),
                 );
-                if($this->member_model->insert($form_fields) == TRUE) {
-                    $this->session->set_flashdata('signup-success', 'You row now a registered member!');
-                    redirect(base_url()."home");
+                $insert_id = $this->member_model->insert($form_fields);
+                if($insert_id) {
+                    $this->activationEmail($insert_id);
+
                 }
             }
         }
-
-        $this->load->library('parser');
         $this->load->model("country_model");
         $data['countries'] = $this->country_model->get_all();
         $this->layout->render('frontend/signup', $data);
+    }
+
+    public function activationEmail($id) {
+        $user = $this->member_model->get($id);
+        $this->load->library('email');
+        $this->email->from($this->site_email);
+        $this->email->to($user->email);
+        $this->email->subject('Voip - Activate your account');
+        $hash = md5($user->email.$user->username);
+        $this->email->message('Link : '.base_url().'users/verify/'.$id.'/'.$hash);
+        if($this->email->send()) {
+            $this->session->set_flashdata('signup-success', 'We have sent you a mail, please click the link provided to activate your account..');
+        } else {
+            $this->session->set_flashdata('signup-fail','Oops!..Email was not send...Click here to resend  <a class="btn btn-warning" href="'. base_url() .'users/activationEmail/'. $id .'">Resend email</a>');
+        }
+        redirect(base_url()."home");
+    }
+
+    public function verify($id, $hash) {
+        $user = $this->member_model->get($id);
+        $source = md5($user->email.$user->username);
+        if($source == $hash) {
+            $this->session->set_flashdata('activation-success', 'Your account has been verified..You can now login!!');
+        } else {
+            $this->session->set_flashdata('activation-fail', 'Oops! verification failed...Please try again!');
+        }
+        redirect(base_url().'users/signin');
     }
 
     public function signin() {
@@ -114,18 +156,14 @@ class Users extends MY_Controller{
                 }
             }
         }
-
         $this->layout->render('frontend/signin');
     }
-    public function info($user_id = '') {
+    public function info() {
         $this->check_session_exists();
-        if(empty($user_id)) {
-            $user_id = $this->session->userdata('user_id');
-        }
+        $user_id = $this->session->userdata('user_id');
         $data['info'] = $this->member_model->get($user_id);
         $this->layout->render('frontend/user_info', $data);
     }
-
     public function updateProfile() {
         $this->check_session_exists();
         $this->load->helper('form');
@@ -155,7 +193,6 @@ class Users extends MY_Controller{
         $data['profile'] = $this->member_model->get($this->session->userdata('user_id'));
         $this->layout->render('frontend/signup',$data);
     }
-
     public function settings() {
         $this->check_session_exists();
         $this->layout->render('frontend/member_settings');
@@ -169,4 +206,5 @@ class Users extends MY_Controller{
         $this->session->set_flashdata('logout-success', 'You are now looged out!');
         redirect(base_url().'home');
     }
+
 }

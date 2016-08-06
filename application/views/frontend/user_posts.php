@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="width: 70%;">
     <h1 class="page-header">My Posts</h1>
     <?php if($this->session->flashdata('post-success')) { ?>
     <div class="alert alert-success">
@@ -22,11 +22,11 @@
         <tr>
             <th>Sl. no.</th>
             <th>Post type</th>
-            <th>Quality Level</div>
-            <th>Description</th>
             <th>Country</th>
+            <th>Quality Level</div>
+<!--            <th>Description</th>-->
             <th>Views</th>
-            <th>Last Updated</th>
+            <th>Date Created</th>
             <th class="text-right">Action</th>
         </tr>
     <?php if(!empty($posts)) { ?>
@@ -37,10 +37,9 @@
             <td><?php print $value->post_type; ?></td>
             <td><?php print $value->country; ?></td>
             <td><?php print $value->quality_level; ?></td>
-            <td><?php print $value->description; ?></td>
-
+<!--            <td>--><?php //print $value->description; ?><!--</td>-->
             <td class="text-center"><?php print $value->views; ?></td>
-            <td><?php print $value->updated_at; ?></td>
+            <td><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
             <td class="text-right">
                 <a href="<?php print base_url(); ?>posts/view/<?php print $value->id; ?>" class="btn btn-primary btn-xs">view more</a>
                 <?php if($value->status == 1) { ?>

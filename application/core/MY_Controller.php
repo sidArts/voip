@@ -5,6 +5,7 @@ class MY_Controller extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->site_email = 'sid94.dev@gmail.com';
         $this->load->library('layout');
         $this->layout->setHeader('header');
         $this->layout->setTitle('VoIP Wholesaler');

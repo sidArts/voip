@@ -46,7 +46,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <p class="text-muted" style="padding: 10px;"><strong>*</strong> These fields are required. Contact form template by <a href="http://bootstrapious.com" target="_blank">Bootstrapious</a>.</p>
+            <p class="text-muted" style="padding: 10px;"><strong>*</strong> These fields are required.</p>
         </div>
     </div>
 </div>

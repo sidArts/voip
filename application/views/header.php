@@ -25,7 +25,7 @@
             <li <?php if($page == 'users' && $this->uri->segment(2) == ''){ print 'class="active"'; } ?>><a href="<?php print base_url(); ?>users"><i class="glyphicon glyphicon-list"></i> All Members</a></li>
             <?php } ?>
             <!--    before login        -->
-            <li <?php if($this->uri->segment(2) == 'contactus'){ print 'class="active"'; } ?>><a href="<?php print base_url(); ?>home/contactus"><i class="glyphicon glyphicon-envelope"></i> Contact us</a></li>
+            <li <?php if($this->uri->segment(2) == 'contact'){ print 'class="active"'; } ?>><a href="<?php print base_url(); ?>home/contact"><i class="glyphicon glyphicon-envelope"></i> Contact us</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 <!-- after login-->
