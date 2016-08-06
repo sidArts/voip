@@ -9,9 +9,6 @@ class Home extends MY_Controller {
     public function index() {
         $this->layout->render("frontend/about");
     }
-    public function search() {
-//        $this->layout->render();
-    }
     public function contact() {
         $this->load->library('email');
         if($this->input->post('submit')) {
@@ -35,6 +32,7 @@ class Home extends MY_Controller {
         }
         $this->layout->render('frontend/contact_us');
     }
+
 }
 
 ?>

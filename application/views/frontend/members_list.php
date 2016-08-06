@@ -16,7 +16,8 @@
                 <?php print $this->session->flashdata('contact-mail-failure'); ?>
             </div>
             <?php } ?>
-            <table class="table table-bordered table-hover">
+            <table id="membersListTable" class="table table-bordered table-hover">
+                <thead>
                 <tr>
                     <th class="text-center">Sl. no.</th>
                     <th>Name</th>
@@ -27,6 +28,8 @@
                     <th>Joined at</th>
                     <th class="text-right">Action</th>
                 </tr>
+                </thead>
+                <tbody>
                 <?php $slno = 1; ?>
                 <?php foreach($members as $value): ?>
                 <tr>
@@ -43,6 +46,7 @@
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                </tbody>
             </table>
         </div>
     </div>
@@ -102,4 +106,7 @@ function populateData(element) {
     var email = element.getAttribute('user-email');
     document.contact.email.value = email;
 }
+$(document).ready(function(){
+    $('#membersListTable').DataTable();
+});
 </script>

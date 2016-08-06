@@ -27,7 +27,9 @@ class Users extends MY_Controller{
             }
             redirect(base_url().'users');
         }
-        $data['members'] = $this->member_model->get_all();
+        $data['members'] = $this->member_model
+                            ->by('is_verified', 1)
+                            ->get_all();
         $this->layout->render('frontend/members_list',$data);
     }
     public function signup() {
@@ -90,7 +92,6 @@ class Users extends MY_Controller{
                 $insert_id = $this->member_model->insert($form_fields);
                 if($insert_id) {
                     $this->activationEmail($insert_id);
-
                 }
             }
         }
@@ -196,6 +197,12 @@ class Users extends MY_Controller{
     public function settings() {
         $this->check_session_exists();
         $this->layout->render('frontend/member_settings');
+    }
+    public function deleteProfile() {
+        $this->layout->render('frontend/delete_member');
+    }
+    public function updatePassword() {
+        $this->layout->render('frontend/update_user_pwd');
     }
     public function logout() {
         $this->check_session_exists();

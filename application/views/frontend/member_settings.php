@@ -15,8 +15,8 @@
     <?php } ?>
     <h1 class="page-header text-center">Settings</h1>
     <ul class="list-group">
-        <li class="list-group-item text-center"><a href="#">Change Password</a></li>
+        <li class="list-group-item text-center"><a href="<?php print base_url() ?>users/updatePassword">Change Password</a></li>
         <li class="list-group-item text-center"><a href="<?php print base_url() ?>users/updateProfile">Update Profile</a></li>
-        <li class="list-group-item text-center"><a href="#">Delete Account</a></li>
+        <li class="list-group-item text-center"><a href="<?php print base_url() ?>users/deleteProfile">Delete Account</a></li>
     </ul>
 </div>

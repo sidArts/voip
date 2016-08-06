@@ -356,7 +356,7 @@ class CI_Config {
 	 *
 	 * This function is called by the front controller (CodeIgniter.php)
 	 * after the Config class is instantiated.  It permits config items
-	 * to be assigned or overriden by variables contained in the home.php file
+	 * to be assigned or overriden by variables contained in the dashboard.php file
 	 *
 	 * @access	private
 	 * @param	array

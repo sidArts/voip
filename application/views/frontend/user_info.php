@@ -3,76 +3,56 @@ $user_id = $this->session->userdata('user_id');
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-7">
             <?php if($user_id == $info->id){ ?>
-            <h3 class="page-header">Account Summary</h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="page-header">Account Summary</h1>
+                </div>
+                <div class="col-lg-4">
+                    <div class="page-header text-right" style="border-bottom: none;">
+                        <a class="btn btn-default btn-sm" href="<?php print base_url() ?>users/updateProfile"><i class="glyphicon glyphicon-pencil"></i> update</a>
+                    </div>
+                </div>
+            </div>
+
             <?php } else { ?>
-            <h3 class="page-header">User Details</h3>
+            <h1 class="page-header">User Details</h1>
             <?php } ?>
             <table class="table table-bordered table-hover">
                 <tr>
                     <th>Name</th>
                     <td>
                         <?php print $info->name; ?>
-                        <?php /*if($user_id == $info->id): */?><!--
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs" onclick="showUpdateField(this)">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </button>
-                        </div>
-                        --><?php /*endif; */?>
+
                     </td>
                 </tr>
                 <tr>
                     <th>Username</th>
                     <td>
                         <?php print $info->username; ?>
-                        <?php /*if($user_id == $info->id): */?><!--
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </button>
-                        </div>
-                        --><?php /*endif; */?>
+
                     </td>
                 </tr>
                 <tr>
                     <th>Company</th>
                     <td>
                         <?php print (!$info->company)? 'Not mentioned':$info->company; ?>
-                        <?php /*if($user_id == $info->id): */?><!--
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </button>
-                        </div>
-                        --><?php /*endif; */?>
+
                     </td>
                 </tr>
                 <tr>
                     <th>Email</th>
                     <td>
                         <?php print $info->email; ?>
-                        <?php /*if($user_id == $info->id): */?><!--
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </button>
-                        </div>
-                        --><?php /*endif; */?>
+
                     </td>
                 </tr>
                 <tr>
                     <th>Phone</th>
                     <td>
                         <?php print $info->phone; ?>
-                        <?php /*if($user_id == $info->id): */?><!--
-                        <div class="pull-right">
-                            <button class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </button>
-                        </div>
-                        --><?php /*endif; */?>
+
                     </td>
                 </tr>
 

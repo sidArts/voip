@@ -1,8 +1,21 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-5">
-            <h3 class="page-header">Add a Post</h3>
+            <h1 class="page-header">Add a Post</h1>
+            <div class="alert alert-info">
+                <strong>Note :</strong> Posts older than 10 days will be automatically erased!
+            </div>
             <?php print form_open(base_url().'posts/add'); ?>
+                <div class="form-group">
+                    <?php print form_label('Select Destination'); ?>
+                    <select class="form-control" name="country">
+                        <option value="">-- select country --</option>
+                        {countries}
+                        <option value="{nicename}">{nicename}</option>
+                        {/countries}
+                    </select>
+                    <?php print form_error('country'); ?>
+                </div>
                 <div class="form-group">
                     <?php print form_label('Select Post Type'); ?>
                     <?php print form_dropdown('post-type',array(
@@ -18,7 +31,7 @@
                         '' => '-- select quality level --',
                         'CLI' => 'CLI',
                         'Non-CLI' => 'Non-CLI',
-                        'CC' => 'CC'
+                        'PREMIUM' => 'PREMIUM'
                     ),'','class="form-control"'); ?>
                     <?php print form_error('quality'); ?>
                 </div>
@@ -60,16 +73,7 @@
                     <?php print form_error('description'); ?>
                 </div>
 
-                <div class="form-group">
-                    <?php print form_label('Select Country'); ?>
-                    <select class="form-control" name="country">
-                        <option value="">-- select country --</option>
-                        {countries}
-                        <option value="{nicename}">{nicename}</option>
-                        {/countries}
-                    </select>
-                    <?php print form_error('country'); ?>
-                </div>
+
                 <?php print form_submit('submit', 'Submit','class="btn btn-primary"'); ?>
             <?php print form_close(); ?>
         </div>

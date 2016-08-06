@@ -26,8 +26,8 @@
                     <td><?php print $post->quality_level ?></td>
                 </tr>
                 <tr>
-                    <th>Description</th>
-                    <td><?php print $post->description ?></td>
+                    <th>Country</th>
+                    <td><?php print $post->country ?></td>
                 </tr>
                 <tr>
                     <th>ASR</th>
@@ -38,8 +38,16 @@
                     <td><?php print $post->acd ?></td>
                 </tr>
                 <tr>
-                    <th>Country</th>
-                    <td><?php print $post->country ?></td>
+                    <th>Rate</th>
+                    <td><?php print $post->rate ?></td>
+                </tr>
+                <tr>
+                    <th>Views</th>
+                    <td><?php print $post->views ?></td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td><?php print $post->description ?></td>
                 </tr>
                 <tr>
                     <th>Date Added</th>

@@ -138,7 +138,7 @@
  */
 	$CFG =& load_class('Config', 'core');
 
-	// Do we have any manually set config items in the home.php file?
+	// Do we have any manually set config items in the dashboard.php file?
 	if (isset($assign_to_config))
 	{
 		$CFG->_assign_to_config($assign_to_config);

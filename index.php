@@ -203,5 +203,5 @@ error_reporting(E_ALL);
  */
 require_once BASEPATH.'core/CodeIgniter.php';
 
-/* End of file home.php */
-/* Location: ./home.php */
+/* End of file dashboard.php */
+/* Location: ./dashboard.php */
