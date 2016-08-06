@@ -19,9 +19,11 @@ class MY_Controller extends CI_Controller {
     }
 
     public function check_session_exists() {
-        if(!$this->session->userdata('logged_in')) {
+        if($this->session->userdata('logged_in') == FALSE) {
             $this->session->set_flashdata('login-warning', 'Please signin to view content');
             redirect(base_url().'home/');
         }
     }
+
+
 }
