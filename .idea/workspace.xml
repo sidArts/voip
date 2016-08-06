@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6401ae34-610d-4738-84b3-41f7cd4259c7" name="Default" comment="email account activation">
+    <list default="true" id="6401ae34-610d-4738-84b3-41f7cd4259c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/home.php" afterPath="$PROJECT_DIR$/application/controllers/home.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/users.php" afterPath="$PROJECT_DIR$/application/controllers/users.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/frontend/contact_us.php" afterPath="$PROJECT_DIR$/application/views/frontend/contact_us.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/frontend/user_info.php" afterPath="$PROJECT_DIR$/application/views/frontend/user_info.php" />
     </list>
     <ignored path="voip.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -427,7 +423,7 @@
       <workItem from="1470402624300" duration="19840000" />
       <workItem from="1470456774082" duration="652000" />
       <workItem from="1470461169155" duration="2013000" />
-      <workItem from="1470463242269" duration="13540000" />
+      <workItem from="1470463242269" duration="13601000" />
     </task>
     <task id="LOCAL-00001" summary="added member settings page">
       <created>1470403881872</created>
@@ -436,11 +432,18 @@
       <option name="project" value="LOCAL" />
       <updated>1470403881872</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="email account activation">
+      <created>1470479349295</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1470479349295</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118026000" />
+    <option name="totallyTimeSpent" value="118087000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="45" y="56" width="1321" height="712" extended-state="0" />
@@ -448,7 +451,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21044663" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
