@@ -1,12 +1,12 @@
+html,body{
+    height: 100%;
+}
+body{
+    position: relative;
+    overflow: auto;
+}
 .navbar{
     margin-bottom: 0;
-}
-.jumbotron{
-    background: url('<?php print base_url() ?>assets/images/banner.jpg');
-    /*background-position: center;*/
-    background-size: cover;
-    min-height: 400px;
-    margin: 0;
 }
 .alert{
     margin: 5px 0px;
@@ -17,7 +17,9 @@ footer {
     padding: 10px 0 15px;
     background-color: #ccc;
     border-color: #e7e7e7;
-
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    width: 100%;
 }
 footer .list-inline {
     margin: 0;

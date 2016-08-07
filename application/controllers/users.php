@@ -17,7 +17,7 @@ class Users extends MY_Controller{
             $message = $this->input->post('description');
             $this->load->library('email');
             $this->email->to($email);
-            $this->email->from($this->site_email);
+            $this->email->from($this->session->userdata('email'));
             $this->email->subject($subject);
             $this->email->message($message);
             if($this->email->send()) {
