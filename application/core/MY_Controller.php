@@ -13,6 +13,7 @@ class MY_Controller extends CI_Controller {
 //      $this->layout->setDefaultCss(array(base_url().'assets/css/bootstrap.css'));
         $this->layout->setDefaultCss(array(
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+            'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
             base_url().'assets/css/style.css',
             base_url().'assets/css/jquery.dataTables.min.css'
         ));

@@ -61,21 +61,6 @@ class Users extends MY_Controller{
                 'field' => 'username',
                 'label' => 'Username',
                 'rules' => 'required|min_length[5]|max_length[20]|alpha_dash'
-            ),
-            array(
-                'field' => 'country-code',
-                'label' => 'Country code',
-                'rules' => 'required'
-            ),
-            array(
-                'field' => 'phone',
-                'label' => 'phone',
-                'rules' => 'required|numeric|max_length[10]|min_length[10]'
-            ),
-            array(
-                'field' => 'company',
-                'label' => 'Company',
-                'rules' => 'required'
             )
         );
         if($this->input->post('submit')) {
@@ -86,9 +71,12 @@ class Users extends MY_Controller{
                     'email' => $this->input->post('email'),
                     'password' => sha1($this->input->post('password')),
                     'username' => $this->input->post('username'),
-                    'phone' => $this->input->post('country-code').'-'.$this->input->post('phone'),
                     'company' => $this->input->post('company'),
+                    'referral' => $this->input->post('referral')
                 );
+                if(!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
+                    $form_fields['phone'] = $this->input->post('country-code').'-'.$this->input->post('phone');
+                }
                 $insert_id = $this->member_model->insert($form_fields);
                 if($insert_id) {
                     $this->activationEmail($insert_id);
@@ -103,7 +91,7 @@ class Users extends MY_Controller{
     public function activationEmail($id) {
         $user = $this->member_model->get($id);
         $this->load->library('email');
-        $this->email->from($this->site_email);
+        $this->email->from($this->site_email,'VoIP Admin');
         $this->email->to($user->email);
         $this->email->subject('Voip - Activate your account');
         $hash = md5($user->email.$user->username);

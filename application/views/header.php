@@ -6,7 +6,7 @@
             <a class="navbar-brand" href="<?php print base_url(); ?>">VoIP</a>
         </div>
         <ul class="nav navbar-nav">
-            <li <?php if($page == 'home' || $page == ''){ print 'class="active"'; } ?>><a href="<?php echo base_url(); ?>home"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+            <li <?php if(($page == 'home' || $page == '') && $this->uri->segment(2) == ''){ print 'class="active"'; } ?>><a href="<?php echo base_url(); ?>home"><i class="glyphicon glyphicon-home"></i> Home</a></li>
 
             <?php if($this->session->userdata('logged_in') == TRUE) { ?>
             <li class="dropdown <?php if($page == 'posts'){ print 'active'; } ?>"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-list-alt"></i> Post <span class="caret"></span></a>

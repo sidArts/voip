@@ -1,0 +1,30 @@
+.navbar{
+    margin-bottom: 0;
+}
+.jumbotron{
+    background: url('<?php print base_url() ?>assets/images/banner.jpg');
+    /*background-position: center;*/
+    background-size: cover;
+    min-height: 400px;
+    margin: 0;
+}
+.alert{
+    margin: 5px 0px;
+    text-align: center;
+}
+footer {
+    margin-top: 40px;
+    padding: 10px 0 15px;
+    background-color: #ccc;
+    border-color: #e7e7e7;
+
+}
+footer .list-inline {
+    margin: 0;
+    padding: 10px;
+}
+footer .copyright {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 0;
+}

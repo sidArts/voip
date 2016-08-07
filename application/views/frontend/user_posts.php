@@ -1,6 +1,7 @@
 <div class="container" style="width: 80%;">
     <h1 class="page-header">My Posts</h1>
     <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>Note :</strong> Posts older than 10 days will be automatically erased!
     </div>
     <?php if($this->session->flashdata('post-success')) { ?>

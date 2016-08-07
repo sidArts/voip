@@ -22,13 +22,18 @@ class Search extends MY_Controller {
             }
             $form['created_at >'] = $date;
             if(empty($form)) {
+                $this->db->where('created_at >',$date);
+                $this->db->where('status', 1);
                 $data['results'] = $this->db->get('posts')->result();
             } else {
+                $this->db->where('created_at >',$date);
+                $this->db->where('status', 1);
                 $data['results'] = $this->db->where($form)->get('posts')->result();
             }
         } else {
             $data['results'] = $this->post_model
                 ->by('created_at >',$date)
+                ->by('status', 1)
                 ->get_all();
         }
         $data['countries'] = $this->db->query('SELECT * FROM country')->result();

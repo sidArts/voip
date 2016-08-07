@@ -7,6 +7,7 @@
             print 'Signup';
         } ?>
     </h1>
+    <div class="well">
     <?php
     if($page1 == 'signup') {
         print form_open(base_url().'users/signup');
@@ -73,8 +74,7 @@
             <?php print form_error('email'); ?>
         </div>
         <div class="form-group">
-            <?php
-            print form_label('Company');
+            <?php  print form_label('Company');
             $input['name'] = 'company';
             $input['class'] = 'form-control';
             if($page1 == 'updateProfile'){
@@ -82,8 +82,8 @@
             } else {
             $input['value'] = set_value('company');
             }
-            print form_input($input); ?>
-            <?php print form_error('company'); ?>
+            print form_input($input);
+            print form_error('company'); ?>
         </div>
         <div class="form-group">
             <?php print form_label('Phone'); ?>
@@ -118,13 +118,25 @@
             <?php echo form_error('country-code'); ?>
             <?php echo form_error('phone'); ?>
         </div>
+        <div class="form-group">
+            <?php  print form_label('Referral');
+            $input['name'] = 'referral';
+            $input['class'] = 'form-control';
+            if($page1 == 'updateProfile'){
+                $input['value'] = $profile->referral;
+            } else {
+                $input['value'] = set_value('referral');
+            }
+            print form_input($input);
+            print form_error('company'); ?>
+        </div>
         <?php
         if($page1 == 'updateProfile') {
             print form_submit('submit', 'Update', 'class="btn btn-success"');
         } else {
-            print form_submit('submit', 'Signup', 'class="btn btn-success"');
+            print form_submit('submit', 'Signup', 'class="btn btn-success btn-lg btn-block"');
         }
         ?>
     <?php print form_close(); ?>
-
+    </div>
 </div>

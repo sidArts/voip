@@ -22,7 +22,7 @@
             <?php print $this->session->flashdata('signin-failure'); ?>
         </div>
     <?php } ?>
-
+    <div class="well">
     <?php print form_open(base_url().'users/signin'); ?>
     <div class="form-group">
         <?php print form_label('Username') ?>
@@ -42,4 +42,5 @@
     </div>
     <?php print form_submit('submit', 'Signin', 'class="btn btn-info"'); ?>
     <?php print form_close(); ?>
+    </div>
 </div>
