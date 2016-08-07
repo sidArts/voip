@@ -1,3 +1,4 @@
+<!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
 <?php $page1 = $this->uri->segment(2);?>
 <div class="container" style="width: 70%;">
     <h1 class="page-header">
@@ -7,6 +8,20 @@
             print 'Signup';
         } ?>
     </h1>
+<!--    CAPTCHA required message -->
+    <?php if(isset($captcha_req)): ?>
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php print $captcha_req; ?>
+    </div>
+    <?php endif; ?>
+<!--  invalid CAPTCHA solution   -->
+    <?php if(isset($invalid_captcha)): ?>
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php print $invalid_captcha; ?>
+    </div>
+    <?php endif; ?>
     <div class="well">
     <?php
     if($page1 == 'signup') {
@@ -40,7 +55,7 @@
                     if($page1 == 'updateProfile'){
                         $input['value'] = $profile->username;
                     } else {
-                        $input['value'] = set_value('name');
+                        $input['value'] = set_value('username');
                     }
                     print form_input($input); ?>
                     <?php print form_error('username'); ?>
@@ -108,9 +123,9 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <?php
-                            $options[''] = '-- Select Country Code --';
+                            $options[''] = '-- Country Code --';
                             foreach($countries as $country) {
-                                $options[$country->phonecode] = "$country->phonecode - [ $country->nicename ]";
+                                $options[$country->phonecode] = "$country->phonecode - $country->nicename";
                             }
                             if($page1 == 'updateProfile'){
                                 $selected = explode('-',$profile->phone)[0];
@@ -129,21 +144,27 @@
                             } else {
                                 $input['value'] = set_value('phone');
                             }
-                            print form_input($input);
+                              print form_input($input);
                             ?>
                         </div>
                     </div>
                     <?php echo form_error('country-code'); ?>
                     <?php echo form_error('phone'); ?>
                 </div>
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6Le4_CYTAAAAAO-XT6FsdYbINxS1qtB2Y5_z3NU9"></div>
+                </div>
             </div>
         </div>
+        <?php if($page1 != 'updateProfile') { ?>
         <div class="form-group">
             <div class="checkbox">
-                <label><input type="checkbox"> Accept - </label>
+                <label><?php print form_checkbox('terms','accept',TRUE) ?> Accept - </label>
                 <a href="#" data-toggle="modal" data-target="#termsconditions">Terms & Conditions</a>
             </div>
+            <?php echo form_error('terms'); ?>
         </div>
+        <?php } ?>
         <?php
         if($page1 == 'updateProfile') {
             print form_submit('submit', 'Update', 'class="btn btn-success"');
@@ -166,7 +187,13 @@
                 <h4 class="modal-title">Terms & Conditions</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <p>
+                    1) we will not be responsible for the accuracy and the quality of the routes and the posts<br>
+                    2) posted pushes and targets will be scraped after say 10 days to maintain updated information<br>
+                    3) all information is private and confidential<br>
+                    4) we will not be responsible for any financial issues arisen between users<br>
+
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

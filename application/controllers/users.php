@@ -61,26 +61,43 @@ class Users extends MY_Controller{
                 'field' => 'username',
                 'label' => 'Username',
                 'rules' => 'required|min_length[5]|max_length[20]|alpha_dash'
+            ),
+            array(
+                'field' => 'terms',
+                'label' => 'Terms & Conditions',
+                'rules' => 'required'
             )
         );
+        $this->layout->setJs('https://www.google.com/recaptcha/api.js');
         if($this->input->post('submit')) {
-            $this->form_validation->set_rules($rules);
-            if($this->form_validation->run() == TRUE) {
-                $form_fields = array(
-                    'name' => $this->input->post('name'),
-                    'email' => $this->input->post('email'),
-                    'password' => sha1($this->input->post('password')),
-                    'username' => $this->input->post('username'),
-                    'company' => $this->input->post('company'),
-                    'referral' => $this->input->post('referral')
-                );
-                if(!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
-                    $form_fields['phone'] = $this->input->post('country-code').'-'.$this->input->post('phone');
+            if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+                $secret = '6Le4_CYTAAAAAGUeznw5lVgaWDMgl7oKFhvXKRj9';
+                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+                $responseData = json_decode($verifyResponse);
+                if($responseData->success) {
+                    $this->form_validation->set_rules($rules);
+                    if ($this->form_validation->run() == TRUE) {
+                        $form_fields = array(
+                            'name' => $this->input->post('name'),
+                            'email' => $this->input->post('email'),
+                            'password' => sha1($this->input->post('password')),
+                            'username' => $this->input->post('username'),
+                            'company' => $this->input->post('company'),
+                            'referral' => $this->input->post('referral')
+                        );
+                        if (!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
+                            $form_fields['phone'] = $this->input->post('country-code') . '-' . $this->input->post('phone');
+                        }
+                        $insert_id = $this->member_model->insert($form_fields);
+                        if ($insert_id) {
+                            $this->activationEmail($insert_id);
+                        }
+                    }
+                } else {
+                    $data['invalid_captcha'] = 'Invalid captcha solution!!';
                 }
-                $insert_id = $this->member_model->insert($form_fields);
-                if($insert_id) {
-                    $this->activationEmail($insert_id);
-                }
+            } else {
+                $data['captcha_req'] = 'Please solve the captcha to continue signup..';
             }
         }
         $this->load->model("country_model");
@@ -137,7 +154,7 @@ class Users extends MY_Controller{
                         'logged_in' => true
                     );
                     $this->session->set_userdata($session_data);
-                    $this->session->set_flashdata('signin-success', 'You have successfully logged in!');
+                    $this->session->set_flashdata('signin-success', 'Welcome '.$session_data['name'].'!..You have successfully logged in!');
                     redirect(base_url().'home');
                 } else {
                     $this->session->set_flashdata('signin-failure', 'Oops! Invalid username or password');
@@ -162,13 +179,17 @@ class Users extends MY_Controller{
             $this->form_validation->set_rules('name','Name','required');
             $this->form_validation->set_rules('username','Username','required');
             $this->form_validation->set_rules('email','Email','required');
-            $this->form_validation->set_rules('country-code','Country Code','required');
-            $this->form_validation->set_rules('phone','Phone','required');
+//            $this->form_validation->set_rules('country-code','Country Code','required');
+//            $this->form_validation->set_rules('phone','Phone','required');
             if($this->form_validation->run() == TRUE) {
                 $form['name']     = $this->input->post('name');
                 $form['username'] = $this->input->post('username');
                 $form['email']    = $this->input->post('email');
-                $form['phone']    = $this->input->post('country-code'). '-' .$this->input->post('phone');
+                $form['company']    = $this->input->post('email');
+                $form['referral']    = $this->input->post('referral');
+                if(!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
+                    $form_fields['phone'] = $this->input->post('country-code').'-'.$this->input->post('phone');
+                }
                 if($this->member_model->update($this->session->userdata('user_id'),$form)) {
                     $this->session->set_flashdata('prof-update-success', 'Your profile was updated successfully!');
                 } else {
@@ -182,6 +203,12 @@ class Users extends MY_Controller{
         $data['profile'] = $this->member_model->get($this->session->userdata('user_id'));
         $this->layout->render('frontend/signup',$data);
     }
+    public function show_hide_contact() {
+        $this->check_session_exists();
+        $user_id = $this->session->userdata('user_id');
+        $this->db->query("UPDATE `members` SET `show_contact_info` = IF(`show_contact_info`=0,1,0) WHERE id=$user_id");
+        redirect(base_url().'users/info');
+    }
     public function settings() {
         $this->check_session_exists();
         $this->layout->render('frontend/member_settings');
@@ -194,11 +221,13 @@ class Users extends MY_Controller{
     }
     public function logout() {
         $this->check_session_exists();
+        $name = explode(' ',$this->session->userdata('name'))[0];
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('username');
+        $this->session->unset_userdata('name');
         $this->session->unset_userdata('email');
         $this->session->set_userdata('logged_in', FALSE);
-        $this->session->set_flashdata('logout-success', 'You are now looged out!');
+        $this->session->set_flashdata('logout-success', "Bye $name!.. You are now logged out!");
         redirect(base_url().'home');
     }
 

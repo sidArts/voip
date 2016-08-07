@@ -51,7 +51,9 @@
         margin: 0;
     }
 </style>
-    <div class="jumbotron"></div>
+    <div class="jumbotron">
+
+    </div>
 <div class="container" style="width: 80%;">
     <h1 class="page-header text-center">Welcome to VOIP</h1>
     <p class="bg-info" style="padding: 20px;">

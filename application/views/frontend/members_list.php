@@ -41,7 +41,15 @@
         <!--            <td>--><?php //print $value->phone; ?><!--</td>-->
                     <td><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
                     <td class="text-right">
-                        <button class="btn btn-success btn-xs" user-email="<?php print $value->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal">contact</button>
+                        <?php if($value->show_contact_info == 0){ ?>
+                        <button class="btn btn-success btn-xs disabled">contact</button>
+                        <?php } else { ?>
+                        <button class="btn btn-success btn-xs"
+                                user-email="<?php print $value->email; ?>"
+                                onclick="populateData(this);"
+                                data-toggle="modal"
+                                data-target="#contactModal">contact</button>
+                        <?php } ?>
                         <!--<a href="<?php /*echo base_url(); */?>users/info">view more</a>-->
                     </td>
                 </tr>

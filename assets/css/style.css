@@ -30,3 +30,9 @@ footer .copyright {
     text-align: center;
     margin-bottom: 0;
 }
+.my-label{
+    color: #fff;
+}
+.my-label:hover{
+    text-decoration: none;
+}

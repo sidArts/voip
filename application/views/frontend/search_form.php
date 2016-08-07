@@ -51,7 +51,7 @@
                         <th>Post Type</th>
                         <th>Country</th>
                         <th>Quality Level</div>
-        <!--                <th>Description</th>-->
+        <!--            <th>Description</th>-->
                         <th>Rate</th>
                         <th>ASR</th>
                         <th>ACD</th>
@@ -63,7 +63,7 @@
                 <tbody>
             <?php $slno = 1; ?>
             <?php foreach($results as $value): ?>
-
+            <?php if($value->user_id != $this->session->userdata('user_id')): ?>
                 <tr>
                     <td><?php print $slno++; ?></td>
                     <td><?php print $value->post_type; ?></td>
@@ -79,6 +79,7 @@
                         <a href="<?php print base_url(); ?>posts/view/<?php print $value->id; ?>" class="btn btn-primary btn-xs">view more</a>
                     </td>
                 </tr>
+            <?php endif; ?>
             <?php endforeach; ?>
                 </tbody>
             </table>

@@ -57,6 +57,7 @@
                     <th>Views</th>
                     <td><?php print $post->views ?></td>
                 </tr>
+                <?php if($this->session->userdata('user_id') != $post->user_id): ?>
                 <tr>
                     <th>Posted By</th>
                     <td>
@@ -64,10 +65,15 @@
                             <?php print $post->username ?> (<?php print $post->name ?>)
                         </p>
                         <p class="pull-right">
+                            <?php if($post->show_contact_info == 0) { ?>
+                            <button class="btn btn-success btn-xs disabled">contact</button>
+                            <?php } else { ?>
                             <button class="btn btn-success btn-xs" user-email="<?php print $post->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal">contact</button>
+                            <?php } ?>
                         </p>
                     </td>
                 </tr>
+                <?php endif; ?>
             </table>
         </div>
     </div>
