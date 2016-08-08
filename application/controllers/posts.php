@@ -4,18 +4,23 @@ class Posts extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('post_model');
+        $this->load->helper('form');
         $this->load->library('parser');
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         $this->check_session_exists();
     }
     public function index() {
         $this->db->order_by('created_at','desc');
-        $data['posts'] = $this->post_model->by('user_id', $this->session->userdata('user_id'))->get_all();
+        $date = date("Y-m-d", strtotime("-10 day"));
+        $data['posts'] = $this->post_model
+                        ->by('user_id', $this->session->userdata('user_id'))
+                        ->by('created_at >',$date)
+                        ->get_all();
         $view = $this->load->view('frontend/user_posts', $data, TRUE);
         $this->layout->render($view);
     }
     public function add() {
-        $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         $rules = [
             [
                 'field' => 'post-type',
@@ -34,7 +39,7 @@ class Posts extends MY_Controller {
             ],
             [
                 'field' => 'description',
-                'label' => '',
+                'label' => 'Description',
                 'rules' => 'min_length[10]'
             ],
             [
@@ -52,6 +57,7 @@ class Posts extends MY_Controller {
                     'description' => $this->input->post('description'),
                     'asr' => $this->input->post('asr'),
                     'acd' => $this->input->post('acd'),
+                    'rate' => $this->input->post('rate'),
                     'country' => $this->input->post('country'),
                     'user_id' => $this->session->userdata('user_id')
                 ];
@@ -69,12 +75,32 @@ class Posts extends MY_Controller {
         $this->layout->render($view);
     }
     public function view($id) {
+        $this->check_if_postid_exist($id);
+        if($this->input->post('submit')) {
+            $email = $this->input->post('email');
+            $subject = $this->input->post('subject');
+            $message = $this->input->post('description');
+            $this->load->library('email');
+            $this->email->to($email);
+            $this->email->from($this->session->userdata('email'));
+            $this->email->subject($subject);
+            $this->email->message($message);
+            if($this->email->send()) {
+                $this->session->set_flashdata('contact-mail-success','Your email has been sent!');
+            } else {
+                $this->session->set_flashdata('contact-mail-failure','Oops!..Something went wrong..Please try again!!');
+            }
+            redirect(base_url().'posts/view/'.$id);
+        }
         $data['post'] = $this->post_model->getWithUserId($id);
-        $view = $data['post']->views; $view++;
-        $this->db->query("UPDATE posts SET views=$view WHERE id=$id");
+        if($data['post']->user_id != $this->session->userdata('user_id')) {
+            $view = $data['post']->views; $view++;
+            $this->db->query("UPDATE posts SET views=$view WHERE id=$id");
+        }
         $this->layout->render('frontend/post_details',$data);
     }
     public function delete($id) {
+        $this->check_if_postid_exist($id);
         if($this->post_model->delete($id)) {
             $this->session->set_flashdata('post-del-flash','Post deleted!');
         } else {
@@ -83,6 +109,7 @@ class Posts extends MY_Controller {
         redirect(base_url().'posts');
     }
     public function change_status($id) {
+        $this->check_if_postid_exist($id);
         $query = $this->db->query("UPDATE posts SET status = IF(status = 1, 0, 1) WHERE id=$id");
         if($query) {
             $this->session->set_flashdata('status-flash','Post status changed successfully!');
@@ -90,5 +117,12 @@ class Posts extends MY_Controller {
             $this->session->set_flashdata('status-flash','Oops!..Post status was not changed..Please try again!!');
         }
         redirect(base_url().'posts/');
+    }
+    public function check_if_postid_exist($id) {
+        $data = $this->post_model->getWithUserId($id);
+        if(empty($data)) {
+            $this->show_404();
+        }
+        return $data;
     }
 }

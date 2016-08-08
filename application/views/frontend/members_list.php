@@ -2,7 +2,22 @@
     <h1 class="page-header">Members</h1>
     <div class="row">
         <div class="col-lg-7">
-            <table class="table table-bordered table-hover">
+        <!-- Contact mail success -->
+            <?php if($this->session->flashdata('contact-mail-success')) { ?>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php print $this->session->flashdata('contact-mail-success'); ?>
+            </div>
+            <?php } ?>
+        <!-- Contact mail failure -->
+            <?php if($this->session->flashdata('contact-mail-failure')) {?>
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <?php print $this->session->flashdata('contact-mail-failure'); ?>
+            </div>
+            <?php } ?>
+            <table id="membersListTable" class="table table-bordered table-hover">
+                <thead>
                 <tr>
                     <th class="text-center">Sl. no.</th>
                     <th>Name</th>
@@ -13,6 +28,8 @@
                     <th>Joined at</th>
                     <th class="text-right">Action</th>
                 </tr>
+                </thead>
+                <tbody>
                 <?php $slno = 1; ?>
                 <?php foreach($members as $value): ?>
                 <tr>
@@ -24,11 +41,20 @@
         <!--            <td>--><?php //print $value->phone; ?><!--</td>-->
                     <td><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
                     <td class="text-right">
-                        <button class="btn btn-success btn-xs" user-email="<?php print $value->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal">contact</button>
+                        <?php if($value->show_contact_info == 0){ ?>
+                        <button class="btn btn-success btn-xs disabled">contact</button>
+                        <?php } else { ?>
+                        <button class="btn btn-success btn-xs"
+                                user-email="<?php print $value->email; ?>"
+                                onclick="populateData(this);"
+                                data-toggle="modal"
+                                data-target="#contactModal">contact</button>
+                        <?php } ?>
                         <!--<a href="<?php /*echo base_url(); */?>users/info">view more</a>-->
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                </tbody>
             </table>
         </div>
     </div>
@@ -88,4 +114,7 @@ function populateData(element) {
     var email = element.getAttribute('user-email');
     document.contact.email.value = email;
 }
+$(document).ready(function(){
+    $('#membersListTable').DataTable();
+});
 </script>
