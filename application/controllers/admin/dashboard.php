@@ -5,9 +5,13 @@ class Dashboard extends MY_Controller {
         parent::__construct();
         $this->check_admin_session_exists();
         $this->load->model('site_info_model');
+        $this->load->model('post_model');
+        $this->load->model('member_model');
     }
     public function index() {
-        $this->layout->render('backend/dashboard');
+        $data['post_count'] = $this->post_model->count_records();
+        $data['member_count'] = $this->member_model->count_records();
+        $this->layout->render('backend/dashboard', $data);
     }
     public function siteinfo() {
         $data['site_info'] = $this->site_info_model->by('id', 1)->get();

@@ -19,7 +19,7 @@ class Home extends MY_Controller {
             $subject = $this->input->post('subject');
             $message = $this->input->post('message');
 
-            $this->email->to($this->site_email);
+            $this->email->to($this->site->site_email);
             $this->email->from($email);
             $this->email->subject($subject);
             $this->email->message($message);

@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="panel panel-default">
-                <div class="panel-heading">Posted By <?php print $post->name.' ('.$post->username.')' ?></div>
+                <div class="panel-heading">Posted By <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name.' ('.$post->username.')' ?></a></div>
                 <div class="panel-body">
                     <table class="table table-bordered table-hover">
                         <tr>

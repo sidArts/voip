@@ -1,11 +1,12 @@
 <?php
 
 class MY_Controller extends CI_Controller {
-
+    protected $site;
     public function __construct()
     {
         parent::__construct();
-        $this->site_email = 'sid94.dev@gmail.com';
+        $this->load->model('site_info_model');
+        $this->site = $this->site_info_model->by('id', 1)->get();
         $this->load->library('layout');
         $this->layout->setDefaultCss(array(
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',

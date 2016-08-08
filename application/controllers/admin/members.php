@@ -7,30 +7,27 @@ class Members extends MY_Controller {
         $this->load->model('member_model');
     }
     public function index() {
+        $this->load->helper('form');
+        $this->load->library('email');
+        if($this->input->post('submit')) {
+            $this->email->from($this->site->site_email);
+            $this->email->to($_POST['email']);
+            $this->email->subject($this->input->post('subject'));
+            $this->email->message($this->input->post('message'));
+            $this->email->set_mailtype('html');
+            if ($this->email->send()) {
+                $this->session->set_flashdata('email-info', "Your message was successfully sent!");
+            } else {
+                $this->session->set_flashdata('email-info-warning', "Oop!..Something went wrong");
+            }
+            redirect(base_url().'admin/members');
+        }
         $data['members'] = $this->member_model->get_all();
+        $this->layout->setJs('http://cdn.ckeditor.com/4.5.10/standard/ckeditor.js');
         $this->layout->render('backend/all_members',$data);
     }
     public function info($id) {
         $data['member'] = $this->member_model->get($id);
         $this->layout->render('backend/single_member',$data);
-    }
-    public function sendMessage() {
-        if($this->input->post('submit')) {
-            $this->load->library('email');
-            foreach ($_POST['email'] as $recipient) {
-                $this->email->from($this->site_email);
-                $this->email->to($recipient);
-                $this->email->subject($this->input->post('subject'));
-                $this->email->message($this->input->post('message'));
-                if($this->email->send()) {
-                    $this->session->set_flashdata('msg-sent-success', 'We have sent you a mail, please click the link provided to activate your account..');
-                } else {
-                    $this->session->set_flashdata('msg-sent-fail','Oops!..Email was not send...Click here to resend  <a class="btn btn-warning" href="'. base_url() .'users/activationEmail/'. $id .'">Resend email</a>');
-                }
-            }
-            redirect(base_url().'admin/members');
-        }
-        $this->layout->setJs('http://cdn.ckeditor.com/4.5.10/standard/ckeditor.js');
-        $this->layout->render('backend/compose_email');
     }
 }

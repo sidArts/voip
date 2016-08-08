@@ -6,31 +6,37 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <!-- Flash message for email success -->
-            <?php if($this->session->flashdata('msg-sent-success')) { ?>
-                <div class="alert alert-success">
+            <!-- Flash message for email success  -->
+            <?php if($this->session->flashdata('email-info')) { ?>
+                <div class="alert alert-info">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <?php print $this->session->flashdata('msg-sent-success'); ?>
+                    <?php print $this->session->flashdata('email-info'); ?>
                 </div>
             <?php } ?>
             <!-- Flash message for email fail  -->
-            <?php if($this->session->flashdata('msg-sent-fail')) { ?>
+            <?php if($this->session->flashdata('email-info-warning')) { ?>
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <?php print $this->session->flashdata('msg-sent-fail'); ?>
+                    <?php print $this->session->flashdata('email-info-warning'); ?>
                 </div>
             <?php } ?>
             <div class="panel panel-default">
-            <form action="<?php print base_url(); ?>admin/members/sendMessage" method="post">
                 <div class="panel-heading">
-                    <button class="btn btn-primary btn-sm" type="button" flag="unchecked" onclick="selectAllMember(this)">Check All</button>
-                    <input type="submit" class="btn btn-success btn-sm" value="Send Message">
+                    <input type="button"
+                           class="btn btn-success btn-sm"
+                           data-toggle="modal"
+                           data-target="#emailModal"
+                           value="Compose Message"
+                           id="compose">
                 </div>
                 <div class="panel-body">
                     <table id="membersListTable" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">Sl. no.</th>
+                                <th class="text-center">
+                                    <input type="checkbox" id="select-all">
+                                    Sl. no.
+                                </th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Username</th>
@@ -41,14 +47,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php print form_open(base_url().'admin/members'); ?>
                         <?php $slno = 1; ?>
-
                         <?php foreach($members as $value): ?>
                             <tr>
                                 <td class="text-center">
                                     <label>
+                                        <input type="checkbox" name="email[]" value="<?php print $value->email; ?>" class="member-email">
                                         <?php print $slno++; ?>
-                                        <input type="checkbox" class="member-checkbox" name="email[]" value="<?php print $value->email; ?>">
                                     </label>
                                 </td>
                                 <td><?php print $value->name; ?></td>
@@ -62,31 +68,73 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+                        <div id="emailModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h2 class="modal-title">Contact Members</h2>
+                                    </div>
+                                    <div class="modal-body">
 
+                                        <div class="form-group">
+                                            <?php print form_label('Enter Subject'); ?>
+                                            <?php print form_input(array(
+                                                'name' => 'subject',
+                                                'class' => 'form-control'
+                                            )); ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <?php print form_label('Enter Message'); ?>
+                                            <?php print form_textarea(array(
+                                                'name' => 'message',
+                                                'id' => 'message',
+                                                'class' => 'form-control'
+                                            )); ?>
+                                        </div>
+                                        <?php print form_submit('submit', 'Send','class="btn btn-success"'); ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php print form_close() ?>
                         </tbody>
                     </table>
                 </div>
-            </form>
             </div>
         </div>
     </div>
 </div>
 <script>
-    function selectAllMember(butt) {
-        var members = document.getElementsByClassName('member-checkbox');
-        if(butt.getAttribute('flag') == 'checked') {
-            butt.innerHTML = 'Unchecked';
+$(document).ready(function () {
+    $('#select-all').change(function () {
+        var member_email = $('.member-email');
+        for(var i = 0; i < member_email.length; i++) {
+           member_email[i].checked = document.getElementById('select-all').checked;
         }
-        if(butt.getAttribute('flag') == 'unchecked') {
-            butt.innerHTML = 'checked';
+    });
+    $('#compose').attr('disabled','');
+    $('#select-all').change(function () {
+        if($('.member-email:checked').length == 0 ) {
+            $('#compose').attr('disabled','');
+        } else {
+            $('#compose').removeAttr('disabled');
         }
-        for(var i = 0; i < members.length; i++) {
-            if(members[i].checked == true) {
-                members[i].checked = false;
+    });
+    $('.member-email').change(function () {
+        if($('.member-email:checked').length == 0 ) {
+            $('#compose').attr('disabled','');
+            $('#select-all').attr('checked','');
+        } else {
+            $('#compose').removeAttr('disabled');
+        }
+    });
+});
+</script>
+<!-- Modal -->
 
-            } else {
-                members[i].checked = true;
-            }
-        }
-    }
+<script>
+    CKEDITOR.replace( 'message' );
 </script>

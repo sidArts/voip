@@ -108,7 +108,7 @@ class Users extends MY_Controller{
     public function activationEmail($id) {
         $user = $this->member_model->get($id);
         $this->load->library('email');
-        $this->email->from($this->site_email,'VoIP Admin');
+        $this->email->from($this->site->site_email);
         $this->email->to($user->email);
         $this->email->subject('Voip - Activate your account');
         $hash = md5($user->email.$user->username);
@@ -124,7 +124,7 @@ class Users extends MY_Controller{
     public function verify($id, $hash) {
         $user = $this->member_model->get($id);
         $source = md5($user->email.$user->username);
-        if($source == $hash && $this->member_model->update($id,array('is_verified' => 1)) == TRUE) {
+        if($source == $hash && $this->member_model->update($id, array('is_verified' => 1)) == TRUE) {
             $this->session->set_flashdata('activation-success', 'Your account has been verified..You can now login!!');
         } else {
             $this->session->set_flashdata('activation-fail', 'Oops! verification failed...Please try again!');
@@ -140,24 +140,27 @@ class Users extends MY_Controller{
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if($this->form_validation->run() == TRUE) {
-                $or_where['username'] = $this->input->post('username');
-                $or_where['email'] = $this->input->post('username');
-                $where['password'] = sha1($this->input->post('password'));
-                $where['is_verified'] = 1;
-                $this->db->or_where($or_where);
-                $this->db->where($where);
-                $user = $this->db->get('members')->row();
-                if($user) {
-                    $session_data = array(
-                        'user_id' => $user->id,
-                        'username' => $user->username,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'logged_in' => true
-                    );
-                    $this->session->set_userdata($session_data);
-                    $this->session->set_flashdata('signin-success', 'Welcome '.$session_data['name'].'!..You have successfully logged in!');
-                    redirect(base_url().'home');
+                $username = $this->input->post('username');
+                $email = $this->input->post('username');
+                $password = sha1($this->input->post('password'));
+                $query = $this->db->query("SELECT * FROM `members` WHERE (`username`='$username' OR `email`='$email') AND `password`='$password'");
+                $user = $query->row();
+                if(!empty($user)) {
+                    if($user->is_verified == 1) {
+                        $session_data = array(
+                            'user_id' => $user->id,
+                            'username' => $user->username,
+                            'name' => $user->name,
+                            'email' => $user->email,
+                            'logged_in' => true
+                        );
+                        $this->session->set_userdata($session_data);
+                        $this->session->set_flashdata('signin-success', 'Welcome '.$session_data['name'].'!..You have successfully logged in!');
+                        redirect(base_url().'home');
+                    } else {
+                        $this->session->set_flashdata('activate-msg', 'Please activate your account to continue login or click here to resend email <a class="btn btn-warning btn-xs" href="'. base_url() .'users/activationEmail/'. $user->id .'">resend</a>!');
+                        redirect(base_url().'users/signin');
+                    }
                 } else {
                     $this->session->set_flashdata('signin-failure', 'Oops! Invalid username or password');
                     redirect(base_url().'users/signin');

@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="page-header">Members</h1>
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-10">
         <!-- Contact mail success -->
             <?php if($this->session->flashdata('contact-mail-success')) { ?>
             <div class="alert alert-success">
@@ -56,6 +56,9 @@
                 <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+        <div class="col-lg-2 well" style="height: 700px;">
+
         </div>
     </div>
 </div>

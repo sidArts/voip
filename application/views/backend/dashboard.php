@@ -14,12 +14,12 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">26</div>
-                        <div>New Members!</div>
+                        <div class="huge"><?php print $member_count ?></div>
+                        <div>All Members!</div>
                     </div>
                 </div>
             </div>
-            <a href="<?php print base_url() ?>admin/members/new">
+            <a href="<?php print base_url() ?>admin/members/">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -36,8 +36,8 @@
                         <i class="fa fa-list-alt fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">12</div>
-                        <div>New Posts!</div>
+                        <div class="huge"><?php print $post_count ?></div>
+                        <div>All Posts</div>
                     </div>
                 </div>
             </div>

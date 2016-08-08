@@ -13,15 +13,22 @@
         <?php print $this->session->flashdata('activation-fail'); ?>
     </div>
 <?php } ?>
+<!-- Flash message for account activation needed  to continue login-->
+<?php if($this->session->flashdata('activate-msg')) { ?>
+    <div class="alert alert-warning text-center" style="width: 50%; margin: auto;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php print $this->session->flashdata('activate-msg'); ?>
+    </div>
+<?php } ?>
+<!-- Flash message for signin failure   -->
+<?php if($this->session->flashdata('signin-failure')) { ?>
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php print $this->session->flashdata('signin-failure'); ?>
+    </div>
+<?php } ?>
+<div style="height: 5px;"></div>
 <div class="container" style="width: 30%;">
-
-    <!-- Flash message for signin failure   -->
-    <?php if($this->session->flashdata('signin-failure')) { ?>
-        <div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <?php print $this->session->flashdata('signin-failure'); ?>
-        </div>
-    <?php } ?>
     <div class="well">
     <?php print form_open(base_url().'users/signin'); ?>
     <div class="form-group">

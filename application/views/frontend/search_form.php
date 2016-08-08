@@ -84,6 +84,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-lg-2 well" style="height: 700px;">
+
+        </div>
     </div>
     <?php } else { ?>
     <div class="row well">
