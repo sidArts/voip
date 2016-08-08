@@ -25,7 +25,7 @@
     <div class="well">
     <?php print form_open(base_url().'users/signin'); ?>
     <div class="form-group">
-        <?php print form_label('Username') ?>
+        <?php print form_label('Username or Email') ?>
         <?php print form_input(array(
             'name' => 'username',
             'class' => 'form-control'

@@ -7,14 +7,9 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
         $this->site_email = 'sid94.dev@gmail.com';
         $this->load->library('layout');
-        $this->layout->setHeader('header');
-        $this->layout->setTitle('VoIP Wholesaler');
-        $this->layout->setFooter('footer');
-//      $this->layout->setDefaultCss(array(base_url().'assets/css/bootstrap.css'));
         $this->layout->setDefaultCss(array(
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
             'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
-            base_url().'assets/css/style.css',
             base_url().'assets/css/jquery.dataTables.min.css'
         ));
         $this->layout->setDefaultJs(array(
@@ -22,6 +17,20 @@ class MY_Controller extends CI_Controller {
             base_url().'assets/js/bootstrap.js',
             base_url().'assets/js/jquery.dataTables.min.js'
         ));
+        if($this->uri->segment(1) == 'admin') {
+            $this->layout->setTitle('VoIP Wholesaler - Admin');
+            $this->layout->setHeader('admin_header');
+            $this->layout->setFooter('admin_footer');
+            $this->layout->setCss(base_url().'assets/css/metisMenu.css');
+            $this->layout->setCss(base_url().'assets/css/sb-admin-2.css');
+            $this->layout->setJs(base_url().'assets/js/sb-admin-2.js');
+            $this->layout->setJs(base_url().'assets/js/metisMenu.js');
+        } else {
+            $this->layout->setTitle('VoIP Wholesaler');
+            $this->layout->setHeader('header');
+            $this->layout->setFooter('footer');
+            $this->layout->setCss(base_url().'assets/css/style.css');
+        }
     }
 
     public function check_session_exists() {

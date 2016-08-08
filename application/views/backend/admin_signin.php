@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,9 +43,9 @@
                             print form_error('password');
                             ?>
                             </div>
-                            <div class="checkbox">
-                            <label><?php print form_checkbox('remember','Remember Me', TRUE); ?> Remember Me</label>
-                            </div>
+                            <!--<div class="checkbox">
+                            <label><?php /*print form_checkbox('remember','Remember Me', TRUE); */?> Remember Me</label>
+                            </div>-->
                             <!-- Change this to a button or input when using this as a form -->
                             <?php print form_submit('submit', 'Signin', 'class="btn btn-success btn-block"') ?>
                         </fieldset>

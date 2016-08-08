@@ -43,10 +43,10 @@
                         <a href="<?php print base_url() ?>admin/dashboard/siteinfo"><i class="fa fa-info fa-fw"></i> Site Info</a>
                     </li>
                     <li>
-                        <a href="<?php print base_url() ?>admin/dashboard/members"><i class="fa fa-user fa-fw"></i> Members</a>
+                        <a href="<?php print base_url() ?>admin/members"><i class="fa fa-user fa-fw"></i> Members</a>
                     </li>
                     <li>
-                        <a href="<?php print base_url() ?>admin/dashboard/posts"><i class="fa fa-list-alt fa-fw"></i> Posts</a>
+                        <a href="<?php print base_url() ?>admin/posts"><i class="fa fa-list-alt fa-fw"></i> Posts</a>
                     </li>
                 </ul>
             </div>

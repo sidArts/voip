@@ -60,7 +60,7 @@ class Users extends MY_Controller{
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required|min_length[5]|max_length[20]|alpha_dash'
+                'rules' => 'required|min_length[5]|max_length[20]|alpha_dash|is_unique[members.username]'
             ),
             array(
                 'field' => 'terms',
@@ -140,11 +140,13 @@ class Users extends MY_Controller{
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if($this->form_validation->run() == TRUE) {
-                $form_fields = array(
-                    'username' => $this->input->post('username'),
-                    'password' => sha1($this->input->post('password'))
-                );
-                $user = $this->member_model->by('is_verified',1)->get($form_fields);
+                $or_where['username'] = $this->input->post('username');
+                $or_where['email'] = $this->input->post('username');
+                $where['password'] = sha1($this->input->post('password'));
+                $where['is_verified'] = 1;
+                $this->db->or_where($or_where);
+                $this->db->where($where);
+                $user = $this->db->get('members')->row();
                 if($user) {
                     $session_data = array(
                         'user_id' => $user->id,

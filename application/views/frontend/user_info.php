@@ -43,6 +43,7 @@ $user_id = $this->session->userdata('user_id');
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <div class="clearfix">
                         <p class="pull-left">Contact Information</p>
                         <p class="pull-right">
                         <?php if($info->show_contact_info == 0) { ?>
@@ -59,6 +60,7 @@ $user_id = $this->session->userdata('user_id');
                             </label>
                         <?php } ?>
                         </p>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-hover">
