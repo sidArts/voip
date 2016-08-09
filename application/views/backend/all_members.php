@@ -1,11 +1,6 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Site Members</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
             <!-- Flash message for email success  -->
             <?php if($this->session->flashdata('email-info')) { ?>
                 <div class="alert alert-info">
@@ -20,14 +15,21 @@
                     <?php print $this->session->flashdata('email-info-warning'); ?>
                 </div>
             <?php } ?>
-            <div class="panel panel-default">
+            <div class="panel panel-primary" style="margin-top: 5px;">
                 <div class="panel-heading">
-                    <input type="button"
-                           class="btn btn-success btn-sm"
-                           data-toggle="modal"
-                           data-target="#emailModal"
-                           value="Compose Message"
-                           id="compose">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h1 class="page-header">Site Members</h1>
+                        </div>
+                        <div class="pull-right">
+                            <input type="button"
+                                   class="btn btn-default btn-sm page-header"
+                                   data-toggle="modal"
+                                   data-target="#emailModal"
+                                   value="Compose Message"
+                                   id="compose">
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <table id="membersListTable" class="table table-bordered table-hover">

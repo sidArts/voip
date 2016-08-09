@@ -7,7 +7,8 @@ class Posts extends MY_Controller {
         $this->load->model('post_model');
     }
     public function index() {
-        $data['posts'] = $this->post_model->get_all();
+        $date = date("Y-m-d", strtotime("-10 day"));
+        $data['posts'] = $this->post_model->by('created_at >',$date)->get_all();
         $this->layout->render('backend/all_posts', $data);
     }
     public function view($post_id) {

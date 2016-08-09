@@ -19,7 +19,7 @@
                         </tr>
                         <tr>
                             <th>Phone</th>
-                            <td><?php print $member->phone ?></td>
+                            <td><?php print ($member->phone) ? $member->phone : 'not available'; ?></td>
                         </tr>
                         <tr>
                             <th>Username</th>
@@ -27,11 +27,25 @@
                         </tr>
                         <tr>
                             <th>Date Joined</th>
-                            <td><?php print $member->created_at ?></td>
+                            <td>
+                                <?php print date('F j, Y, g:i a', strtotime($member->created_at)); ?>
+                            </td>
                         </tr>
                         <tr>
                             <th>Last Updated</th>
-                            <td><?php print $member->updated_at ?></td>
+                            <td>
+                                <?php print date('F j, Y, g:i a', strtotime($member->updated_at)); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                            <?php if($member->is_verified == 1) { ?>
+                                <label class="label label-success">verified</label>
+                            <?php } else { ?>
+                                <label class="label label-warning">inactive</label>
+                            <?php } ?>
+                            </td>
                         </tr>
                     </table>
                 </div>

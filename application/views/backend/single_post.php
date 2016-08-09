@@ -1,15 +1,17 @@
 <div id="page-wrapper">
     <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Post Details</h1>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">Posted By <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name.' ('.$post->username.')' ?></a></div>
+            <div class="panel panel-success" style="margin-top: 5px;">
+                <div class="panel-heading">
+                    <h2 class="page-header">
+                    Posted By
+                    <strong>
+                        <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name.' ('.$post->username.')' ?></a>
+                    </strong>
+                    </h2>
+                </div>
                 <div class="panel-body">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                         <tr>
                             <th>Post Type</th>
                             <td><?php print $post->post_type; ?></td>
@@ -40,7 +42,7 @@
                         </tr>
                         <tr>
                             <th>Description</th>
-                            <td><?php print $post->description ?></td>
+                            <td><?php print ($post->description) ? $post->description : 'not available'; ?></td>
                         </tr>
                         <tr>
                             <th>Date Added</th>
