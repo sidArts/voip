@@ -1,13 +1,17 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-default" style="margin-top: 10px;">
+            <div class="panel panel-primary" style="margin-top: 10px;">
                 <div class="panel-heading"><h1 class="page-header">Site Information</h1></div>
                 <div class="panel-body">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                         <tr>
                             <th>Title</th>
                             <td><?php print $site_info->site_title; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td><?php print $site_info->site_name; ?></td>
                         </tr>
                         <tr>
                             <th>Email</th>

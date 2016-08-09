@@ -1,10 +1,10 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-default" style="margin-top: 10px;">
+            <div class="panel panel-primary" style="margin-top: 10px;">
                 <div class="panel-heading"><h1 class="page-header">Member Information</h1></div>
                 <div class="panel-body">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                         <tr>
                             <th>Member Name</th>
                             <td><?php print $member->name; ?></td>

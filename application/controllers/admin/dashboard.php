@@ -17,5 +17,7 @@ class Dashboard extends MY_Controller {
         $data['site_info'] = $this->site_info_model->by('id', 1)->get();
         $this->layout->render('backend/site_info', $data);
     }
+    public function editAbout() {
 
+    }
 }

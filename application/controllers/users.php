@@ -29,6 +29,7 @@ class Users extends MY_Controller{
         }
         $data['members'] = $this->member_model
                             ->by('is_verified', 1)
+                            ->by('id !=', $this->session->userdata('user_id'))
                             ->get_all();
         $this->layout->render('frontend/members_list',$data);
     }

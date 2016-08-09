@@ -1,46 +1,5 @@
 <div class="container">
-    <h1 class="page-header">Search</h1>
-
-    <div class="row">
-        <?php print form_open(base_url().'search/') ?>
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <?php
-                    $selected = $this->input->post('category');
-                    print form_dropdown('category',array(
-                        ''=>'-- All Category --',
-                        'PUSH'=>'PUSH',
-                        'TARGET'=>'TARGET'
-                    ),$selected,'class="form-control"');
-                    ?>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <?php
-                    $selected = $this->input->post('country');
-                    $options = array('' => '--All Countries--');
-                    foreach ($countries as $value) { $options[$value->nicename] = $value->nicename; }
-                    print form_dropdown('country',$options,$selected,'class="form-control"');
-                    ?>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <?php
-                    $selected = $this->input->post('quality-level');
-                    $options = array('' => '--All Quality Levels--', 'CLI' => 'CLI', 'Non-CLI' => 'Non-CLI', 'CC' => 'CC');
-                    print form_dropdown('quality-level',$options,$selected,'class="form-control"');
-                    ?>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-            </div>
-        </div>
-        <?php print form_close(); ?>
-    </div>
+    <h1 class="page-header">Search Post</h1>
     <div class="row">
         <div class="col-lg-10">
             <table id="searchTable" class="table table-bordered">

@@ -21,9 +21,9 @@
                 <tr>
                     <th class="text-center">Sl. no.</th>
                     <th>Name</th>
-        <!--            <th>Email</th>-->
-        <!--            <th>Username</th>-->
+                    <th>Username</th>
                     <th>Company</th>
+                    <th>Email</th>
         <!--            <th>Phone</th>-->
                     <th>Joined at</th>
                     <th class="text-right">Action</th>
@@ -35,9 +35,15 @@
                 <tr>
                     <td class="text-center"><?php print $slno++; ?></td>
                     <td><?php print $value->name; ?></td>
-        <!--            <td>--><?php //print $value->email; ?><!--</td>-->
-        <!--            <td>--><?php //print $value->username; ?><!--</td>-->
+                    <td><?php print $value->username; ?></td>
                     <td><?php print $value->company; ?></td>
+                    <td>
+                        <?php if($value->show_contact_info == 1){
+                            print $value->email;
+                        } else { ?>
+                        <label class="label label-warning">hidden</label>
+                        <?php } ?>
+                    </td>
         <!--            <td>--><?php //print $value->phone; ?><!--</td>-->
                     <td><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
                     <td class="text-right">
