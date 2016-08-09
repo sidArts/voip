@@ -43,6 +43,7 @@
                                 <th>Company</th>
                                 <th>Phone</th>
                                 <th>Joined at</th>
+                                <th>Status</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -63,6 +64,13 @@
                                 <td><?php print $value->company; ?></td>
                                 <td><?php print $value->phone; ?></td>
                                 <td><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
+                                <td>
+                                <?php if($value->is_verified == 1) { ?>
+                                    <label class="label label-success">verified</label>
+                                <?php } else { ?>
+                                    <label class="label label-warning">inactive</label>
+                                <?php } ?>
+                                </td>
                                 <td class="text-right">
                                     <a href="<?php echo base_url(); ?>admin/members/info/<?php print $value->id ?>" class="btn btn-info btn-xs">view more</a>
                                 </td>
@@ -77,7 +85,6 @@
                                         <h2 class="modal-title">Contact Members</h2>
                                     </div>
                                     <div class="modal-body">
-
                                         <div class="form-group">
                                             <?php print form_label('Enter Subject'); ?>
                                             <?php print form_input(array(
@@ -132,9 +139,6 @@ $(document).ready(function () {
         }
     });
 });
-</script>
-<!-- Modal -->
-
-<script>
-    CKEDITOR.replace( 'message' );
+$('#membersListTable').DataTable();
+CKEDITOR.replace( 'message' );
 </script>

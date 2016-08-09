@@ -5,9 +5,9 @@ class Search extends MY_Controller {
         parent::__construct();
         $this->load->model('post_model');
         $this->check_session_exists();
+        $this->load->helper('form');
     }
     public function index() {
-        $this->load->helper('form');
         $data = [];
         $date = date("Y-m-d", strtotime("-10 day"));
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -39,5 +39,12 @@ class Search extends MY_Controller {
         $data['countries'] = $this->db->query('SELECT * FROM country')->result();
         $this->layout->render('frontend/search_form', $data);
     }
-
+    public function compare($post_id) {
+        if(empty($this->post_model->get($post_id))) {
+            $this->show_404();
+        }
+        $data['results'] = $this->post_model->compare($post_id);
+        $data['countries'] = $this->db->get('country')->result();
+        $this->layout->render('frontend/search_form', $data);
+    }
 }

@@ -35,7 +35,17 @@ class Posts extends MY_Controller {
             [
                 'field' => 'rate',
                 'label' => 'Rate',
-                'rules' => 'required'
+                'rules' => 'required|numeric'
+            ],
+            [
+                'field' => 'asr',
+                'label' => 'ASR',
+                'rules' => 'required|integer'
+            ],
+            [
+                'field' => 'acd',
+                'label' => 'ACD',
+                'rules' => 'required|numeric'
             ],
             [
                 'field' => 'description',
@@ -63,12 +73,12 @@ class Posts extends MY_Controller {
                 ];
                 $post = $this->post_model->insert($formfields);
                 if($post) {
-                    $this->emailPost($post);
+                    $this->emailAddedPost($post);
+                    $this->emailRelevantPosts($post);
                     $this->session->set_flashdata('post-success','Post added successfully!');
                     redirect(base_url().'posts/');
                 }
             }
-
         }
         $this->load->helper('form');
         $this->load->model('country_model');
@@ -127,8 +137,8 @@ class Posts extends MY_Controller {
         }
         return $data;
     }
-    public function emailPost($post_id) {
-        $post = $this->post_model->getWithUserId($post_id);
+    public function emailAddedPost($post_id) {
+        $post = $this->check_if_postid_exist($post_id);
         $this->load->library('parser');
         $this->load->library('email');
         $template = $this->parser->parse('frontend/email_new_post_tem', $post, TRUE);
@@ -138,5 +148,20 @@ class Posts extends MY_Controller {
         $this->email->message($template);
         $this->email->set_mailtype('html');
         $this->email->send();
+    }
+    public function emailRelevantPosts($post_id) {
+        $post = $this->check_if_postid_exist($post_id);
+        $data['posts'] = $this->post_model->compare($post_id);
+        if(!empty($data['posts'])) {
+            $this->load->library('parser');
+            $this->load->library('email');
+            $template = $this->parser->parse('frontend/email_relevant_posts_template', $data, TRUE);
+            $this->email->to($post->email);
+            $this->email->from($this->site->site_email, $this->site->site_name);
+            $this->email->subject('Relevant Posts');
+            $this->email->message($template);
+            $this->email->set_mailtype('html');
+            $this->email->send();
+        }
     }
 }

@@ -1,4 +1,3 @@
-<!--<h1 class="page-header1 text-center">Signin</h1>-->
 <!-- Flash message for account verification success   -->
 <?php if($this->session->flashdata('activation-success')) { ?>
     <div class="alert alert-info text-center" style="width: 50%; margin: auto;">
