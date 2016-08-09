@@ -61,7 +61,9 @@ class Posts extends MY_Controller {
                     'country' => $this->input->post('country'),
                     'user_id' => $this->session->userdata('user_id')
                 ];
-                if($this->post_model->insert($formfields)) {
+                $post = $this->post_model->insert($formfields);
+                if($post) {
+                    $this->emailPost($post);
                     $this->session->set_flashdata('post-success','Post added successfully!');
                     redirect(base_url().'posts/');
                 }
@@ -124,5 +126,17 @@ class Posts extends MY_Controller {
             $this->show_404();
         }
         return $data;
+    }
+    public function emailPost($post_id) {
+        $post = $this->post_model->getWithUserId($post_id);
+        $this->load->library('parser');
+        $this->load->library('email');
+        $template = $this->parser->parse('frontend/email_new_post_tem', $post, TRUE);
+        $this->email->to($post->email);
+        $this->email->from($this->site->site_email, $this->site->site_name);
+        $this->email->subject('Post Description');
+        $this->email->message($template);
+        $this->email->set_mailtype('html');
+        $this->email->send();
     }
 }

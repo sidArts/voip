@@ -131,7 +131,6 @@ class Users extends MY_Controller{
         }
         redirect(base_url().'users/signin');
     }
-
     public function signin() {
         if($this->session->userdata('logged_in') == TRUE) {
             redirect(base_url().'home/');
@@ -141,9 +140,8 @@ class Users extends MY_Controller{
             $this->form_validation->set_rules('password', 'Password', 'required');
             if($this->form_validation->run() == TRUE) {
                 $username = $this->input->post('username');
-                $email = $this->input->post('username');
                 $password = sha1($this->input->post('password'));
-                $query = $this->db->query("SELECT * FROM `members` WHERE (`username`='$username' OR `email`='$email') AND `password`='$password'");
+                $query = $this->db->query("SELECT * FROM `members` WHERE (`username`='$username' OR `email`='$username') AND `password`='$password'");
                 $user = $query->row();
                 if(!empty($user)) {
                     if($user->is_verified == 1) {
@@ -158,7 +156,7 @@ class Users extends MY_Controller{
                         $this->session->set_flashdata('signin-success', 'Welcome '.$session_data['name'].'!..You have successfully logged in!');
                         redirect(base_url().'home');
                     } else {
-                        $this->session->set_flashdata('activate-msg', 'Please activate your account to continue login or click here to resend email <a class="btn btn-warning btn-xs" href="'. base_url() .'users/activationEmail/'. $user->id .'">resend</a>!');
+                        $this->session->set_flashdata('activate-msg', 'Please activate your account to continue login or <a class="btn btn-warning btn-xs" href="'. base_url() .'users/activationEmail/'. $user->id .'">click here</a> to resend email');
                         redirect(base_url().'users/signin');
                     }
                 } else {
@@ -190,8 +188,8 @@ class Users extends MY_Controller{
                 $form['name']     = $this->input->post('name');
                 $form['username'] = $this->input->post('username');
                 $form['email']    = $this->input->post('email');
-                $form['company']    = $this->input->post('email');
-                $form['referral']    = $this->input->post('referral');
+                $form['company']  = $this->input->post('email');
+                $form['referral'] = $this->input->post('referral');
                 if(!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
                     $form_fields['phone'] = $this->input->post('country-code').'-'.$this->input->post('phone');
                 }

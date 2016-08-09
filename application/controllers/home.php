@@ -11,18 +11,19 @@ class Home extends MY_Controller {
     }
     public function contact() {
         $this->load->library('email');
+        $this->load->library('parser');
         if($this->input->post('submit')) {
-            $firstname = $this->input->post('fname');
-            $lastname = $this->input->post('lname');
-            $phone = $this->input->post('phone');
-            $email = $this->input->post('email');
-            $subject = $this->input->post('subject');
-            $message = $this->input->post('message');
-
+            $data['name'] = $this->input->post('fname').' '.$this->input->post('lname');
+            $data['phone'] = $this->input->post('phone');
+            $data['email'] = $this->input->post('email');
+            $data['subject'] = $this->input->post('subject');
+            $data['message'] = $this->input->post('message');
+            $message = $this->parser->parse('frontend/contact_us_email_tem', $data, TRUE);
             $this->email->to($this->site->site_email);
-            $this->email->from($email);
-            $this->email->subject($subject);
+            $this->email->from($data['email']);
+            $this->email->subject($data['subject']);
             $this->email->message($message);
+            $this->email->set_mailtype('html');
             if($this->email->send()) {
                 $this->session->set_flashdata('contact-mail-success','Your email has been sent!');
             } else {

@@ -1,9 +1,11 @@
 <div class="container">
-    <h1 class="page-header text-center">Contact Us</h1>
+    <h1 class="page-header1 text-center">Contact Us</h1>
     <div class="row">
-        <div class="col-lg-2 well" style="height: 700px"></div>
-        <div class="col-lg-8 well">
-            <!-- Contact mail success -->
+        <div class="col-lg-2 well" style="height: 700px">
+        <!-- SPACE FOR ADS -->
+        </div>
+        <div class="col-lg-6 col-lg-offset-1 well">
+                 <!-- Contact mail success -->
             <?php if($this->session->flashdata('contact-mail-success')) { ?>
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -17,6 +19,8 @@
                     <?php print $this->session->flashdata('contact-mail-failure'); ?>
                 </div>
             <?php } ?>
+            <fieldset>
+                <legend>Contact Form</legend>
             <form action="<?php print base_url(); ?>home/contact" method="post">
                 <div class="row">
                     <div class="col-md-6">
@@ -72,13 +76,16 @@
                     </div>
                 </div>
             </form>
+            </fieldset>
             <div class="row">
                 <div class="col-md-12">
                     <p class="text-muted" style="padding: 10px;"><strong>*</strong> These fields are required.</p>
                 </div>
             </div>
         </div>
-        <div class="col-lg-2 well" style="height: 700px"></div>
+        <div class="col-lg-2 col-lg-offset-1 well" style="height: 700px">
+            <!-- SPACE FOR ADS -->
+        </div>
     </div>
 
 </div>
