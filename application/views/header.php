@@ -32,7 +32,7 @@
         <?php if($this->session->userdata('logged_in') == TRUE) { ?>
             <li class="dropdown <?php if($page == 'users' && $this->uri->segment(2) != '') { print 'active'; } ?>"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php print $this->session->userdata('name'); ?> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?php echo base_url(); ?>users/info"><i class="glyphicon glyphicon-info-sign"></i> view information</a></li>
+                    <li><a href="<?php echo base_url(); ?>users/info"><i class="glyphicon glyphicon-info-sign"></i> view profile</a></li>
 <!--                    <li><a href="--><?php //echo base_url(); ?><!--users/settings"><i class="glyphicon glyphicon-cog"></i> settings</a></li>-->
                     <li><a href="<?php print base_url(); ?>users/logout"><i class="glyphicon glyphicon-log-out"></i> logout</a></li>
                 </ul>
