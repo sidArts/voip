@@ -3,7 +3,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?php print base_url(); ?>">VoIP</a>
+            <a class="navbar-brand" href="<?php print base_url(); ?>"><?php print $site->site_name; ?></a>
         </div>
         <ul class="nav navbar-nav">
             <li <?php if(($page == 'home' || $page == '') && $this->uri->segment(2) == ''){ print 'class="active"'; } ?>><a href="<?php echo base_url(); ?>home"><i class="glyphicon glyphicon-home"></i> Home</a></li>

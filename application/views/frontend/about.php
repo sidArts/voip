@@ -44,10 +44,11 @@
 </div>
 <style>
     .jumbotron{
-        background: url('<?php print base_url() ?>assets/images/banner.jpg');
-        /*background-position: center;*/
+        background: url('<?php print base_url("assets/uploads")."/".$site->site_homepage_image; ?>');
+        background-attachment: fixed;
+        /*background-position:center;*/
         background-size: cover;
-        min-height: 400px;
+        height: 80%;
         margin: 0;
     }
 </style>
@@ -55,16 +56,10 @@
 
     </div>
 <div class="container" style="width: 80%;">
-    <h1 class="page-header text-center">Welcome to VOIP</h1>
-    <p class="bg-info" style="padding: 20px;">
-        We are in the wholesale VOIP minutes business.
-        There are over 50000 destinations companies are selling now.
-        I am attaching a sample rate sheet for your reference so that you know what it is all about.
-        There are over 100K worldwide operators currently and everyone wants to buy cheap from someone and sell high to others.
-        Unfortunately, the margin is slim nowadays and in some cases, it can be as low as 2%.
-        As such, everyone is looking for lower rates and at the same time, looking for buyers who are willing to buy higher.
-
-    </p>
+<!--    <h1 class="page-header text-center">Welcome to VOIP</h1>-->
+    <div class="bg-info" style="padding: 20px; margin-bottom: 5px;">
+        <?php print $site->site_about ?>
+    </div>
     <div>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">

@@ -29,7 +29,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted"> &copy; Your Website 2016</p>
+                <p class="copyright text-muted"> &copy; <?php print date('Y'); ?> <?php print $site->site_name; ?></p>
             </div>
         </div>
     </div>

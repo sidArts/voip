@@ -1,7 +1,7 @@
 <?php
 
 class MY_Controller extends CI_Controller {
-    protected $site;
+    public $site;
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +19,7 @@ class MY_Controller extends CI_Controller {
             base_url().'assets/js/jquery.dataTables.min.js'
         ));
         if($this->uri->segment(1) == 'admin') {
-            $this->layout->setTitle('VoIP Wholesaler - Admin');
+            $this->layout->setTitle($this->site->site_title.' : Admin Dashboard');
             $this->layout->setHeader('admin_header');
             $this->layout->setFooter('admin_footer');
             $this->layout->setCss(base_url().'assets/css/metisMenu.css');
@@ -27,7 +27,7 @@ class MY_Controller extends CI_Controller {
             $this->layout->setJs(base_url().'assets/js/sb-admin-2.js');
             $this->layout->setJs(base_url().'assets/js/metisMenu.js');
         } else {
-            $this->layout->setTitle('VoIP Wholesaler');
+            $this->layout->setTitle($this->site->site_title);
             $this->layout->setHeader('header');
             $this->layout->setFooter('footer');
             $this->layout->setCss(base_url().'assets/css/style.css');
