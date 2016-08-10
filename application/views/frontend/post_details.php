@@ -15,7 +15,7 @@
             </div>
         <?php } ?>
         <div class="col-lg-5">
-            <div class="panel panel-info" style="margin-top: 5px;">
+            <div class="panel panel-primary" style="margin-top: 5px;">
                 <div class="panel-heading">
                     <h1>Post Details</h1>
                 </div>

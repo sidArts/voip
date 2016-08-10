@@ -40,7 +40,7 @@
                         <a href="<?php print base_url() ?>admin/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="<?php print base_url() ?>admin/dashboard/siteinfo"><i class="fa fa-info fa-fw"></i> Site Info</a>
+                        <a href="<?php print base_url() ?>admin/dashboard/siteInfo"><i class="fa fa-info fa-fw"></i> Site Info</a>
                     </li>
                     <li>
                         <a href="<?php print base_url() ?>admin/members"><i class="fa fa-user fa-fw"></i> Members</a>
