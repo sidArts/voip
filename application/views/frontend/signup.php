@@ -139,7 +139,9 @@
                     <?php echo form_error('phone'); ?>
                 </div>
                 <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="6Le4_CYTAAAAAO-XT6FsdYbINxS1qtB2Y5_z3NU9"></div>
+                    <?php print form_label('<img src="'. base_url('users/gen_captcha_image') .'">');
+                    print form_input(array('name' => 'captcha', 'class' => 'form-control', 'placeholder' => 'Enter Captcha Code'));
+                    print form_error('captcha')?>
                 </div>
             </div>
         </div>

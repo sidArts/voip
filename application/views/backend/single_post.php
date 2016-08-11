@@ -1,14 +1,9 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-success" style="margin-top: 5px;">
+            <div class="panel panel-primary" style="margin-top: 5px;">
                 <div class="panel-heading">
-                    <h2 class="page-header">
-                    Posted By
-                    <strong>
-                        <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name ?></a>
-                    </strong>
-                    </h2>
+                    <h2 class="page-header">Post Details</h2>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover">
@@ -47,6 +42,10 @@
                         <tr>
                             <th>Views</th>
                             <td><?php print $post->views ?></td>
+                        </tr>
+                        <tr>
+                            <th>Posted By</th>
+                            <td><a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name ?></a></td>
                         </tr>
                     </table>
                 </div>

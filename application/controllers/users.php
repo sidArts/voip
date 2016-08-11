@@ -67,38 +67,36 @@ class Users extends MY_Controller{
                 'field' => 'terms',
                 'label' => 'Terms & Conditions',
                 'rules' => 'required'
+            ),
+            array(
+                'field' => 'captcha',
+                'label' => 'Captcha Text',
+                'rules' => 'required'
             )
         );
 
         $this->layout->setJs('https://www.google.com/recaptcha/api.js');
         if($this->input->post('submit')) {
-            if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
-                $secret = '6Le4_CYTAAAAAGUeznw5lVgaWDMgl7oKFhvXKRj9';
-                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-                $responseData = json_decode($verifyResponse);
-                if($responseData->success) {
-                    $this->form_validation->set_rules($rules);
-                    if ($this->form_validation->run() == TRUE) {
-                        $form_fields = array(
-                            'name' => $this->input->post('name'),
-                            'email' => $this->input->post('email'),
-                            'password' => sha1($this->input->post('password')),
-                            'company' => $this->input->post('company'),
-                            'referral' => $this->input->post('referral')
-                        );
-                        if (!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
-                            $form_fields['phone'] = $this->input->post('country-code') . '-' . $this->input->post('phone');
-                        }
-                        $insert_id = $this->member_model->insert($form_fields);
-                        if ($insert_id) {
-                            $this->activationEmail($insert_id);
-                        }
+            $this->form_validation->set_rules($rules);
+            if ($this->form_validation->run() == TRUE) {
+                if($this->session->userdata('captcha_code') == $this->input->post('captcha')) {
+                    $form_fields = array(
+                        'name' => $this->input->post('name'),
+                        'email' => $this->input->post('email'),
+                        'password' => sha1($this->input->post('password')),
+                        'company' => $this->input->post('company'),
+                        'referral' => $this->input->post('referral')
+                    );
+                    if (!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
+                        $form_fields['phone'] = $this->input->post('country-code') . '-' . $this->input->post('phone');
+                    }
+                    $insert_id = $this->member_model->insert($form_fields);
+                    if ($insert_id) {
+                        $this->activationEmail($insert_id);
                     }
                 } else {
-                    $data['invalid_captcha'] = 'Invalid captcha solution!!';
+                    $data['invalid_captcha'] = 'Invalid captcha text!!';
                 }
-            } else {
-                $data['captcha_req'] = 'Please solve the captcha to continue signup..';
             }
         }
         $this->load->model("country_model");
@@ -268,6 +266,20 @@ class Users extends MY_Controller{
         $this->session->set_userdata('logged_in', FALSE);
         $this->session->set_flashdata('logout-success', "Bye $name!.. You are now logged out!");
         redirect(base_url().'home');
+    }
+    public function gen_captcha_image() {
+        //Initializing PHP variable with string
+        $captchanumber = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
+        //Getting first 6 word after shuffle
+        $captchanumber = substr(str_shuffle($captchanumber), 0, 5);
+        //Initializing session variable with above generated sub-string
+        $this->session->set_userdata('captcha_code',$captchanumber);
+        //Generating CAPTCHA
+        $image = imagecreatefromjpeg(base_url('assets/images/bj.jpg'));
+        $foreground = imagecolorallocate($image, 175, 199, 200); //font color
+        imagestring($image, 5, 45, 8, $captchanumber, $foreground);
+        header('Content-type: image/png');
+        imagepng($image);
     }
 
 }
