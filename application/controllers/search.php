@@ -4,15 +4,13 @@ class Search extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('post_model');
+        $this->post_day_limit = $this->post_model->getPostDays();
         $this->check_session_exists();
         $this->load->helper('form');
     }
     public function index() {
-        $date = date("Y-m-d", strtotime("-10 day"));
-        $data['results'] = $this->post_model
-            ->by('created_at >',$date)
-            ->by('status', 1)
-            ->get_all();
+        $date = date("Y-m-d", strtotime("-$this->post_day_limit day"));
+        $data['results'] = $this->post_model->getAllWithUser(array('user_id !=' => $this->session->userdata('user_id')));
         $data['countries'] = $this->db->query('SELECT * FROM country')->result();
         $this->layout->render('frontend/search_form', $data);
     }

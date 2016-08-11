@@ -34,8 +34,8 @@
                     <td class="text-center"><?php print $value->views; ?></td>
                     <td class="text-center"><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
                     <td class="text-right" style="width: 150px;">
-                        <a href="<?php print base_url(); ?>search/compare/<?php print $value->id; ?>" class="btn btn-info btn-xs">compare</a>
-                        <a href="<?php print base_url(); ?>posts/view/<?php print $value->id; ?>" class="btn btn-primary btn-xs">view more</a>
+                        <a href="<?php print base_url(); ?>search/compare/<?php print $value->post_id; ?>" class="btn btn-info btn-xs">compare</a>
+                        <a href="<?php print base_url(); ?>posts/view/<?php print $value->post_id; ?>" class="btn btn-primary btn-xs">view more</a>
                     </td>
                 </tr>
             <?php endif;

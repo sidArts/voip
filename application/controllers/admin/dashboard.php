@@ -5,10 +5,27 @@ class Dashboard extends MY_Controller {
         parent::__construct();
         $this->check_admin_session_exists();
         $this->load->model('post_model');
+        $this->post_day_limit = $this->post_model->getPostDays();
         $this->load->model('member_model');
     }
     public function index() {
-        $data['post_count'] = $this->post_model->count_records();
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">', '</div>');
+        if($this->input->post('post-days')):
+            $this->form_validation->set_rules('post-days','Post Day Limit','required|integer');
+            if($this->form_validation->run()):
+                $this->post_model->updatePostDays($this->input->post('post-days'));
+                redirect(base_url('admin/dashboard'));
+            endif;
+        endif;
+        $date = date("Y-m-d", strtotime("-$this->post_day_limit day"));
+        $data['post_count'] = $this->db->select('rate')
+                                       ->from('posts')
+                                       ->join('members','posts.user_id=members.id')
+                                       ->where('posts.created_at >', $date)
+                                       ->count_all_results();
+        $data['post_day_limit'] = $this->post_day_limit;
         $data['member_count'] = $this->member_model->count_records();
         $this->layout->render('backend/dashboard', $data);
     }
@@ -68,5 +85,8 @@ class Dashboard extends MY_Controller {
             $data['data'] = $this->upload->data();
         }
         return $data;
+    }
+    public function setPostDays() {
+
     }
 }

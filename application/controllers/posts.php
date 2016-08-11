@@ -7,12 +7,13 @@ class Posts extends MY_Controller {
         $this->load->helper('form');
         $this->load->library('parser');
         $this->load->library('form_validation');
+        $this->post_day_limit = $this->post_model->getPostDays();
         $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         $this->check_session_exists();
     }
     public function index() {
         $this->db->order_by('created_at','desc');
-        $date = date("Y-m-d", strtotime("-10 day"));
+        $date = date("Y-m-d", strtotime("-$this->post_day_limit day"));
         $data['posts'] = $this->post_model
                         ->by('user_id', $this->session->userdata('user_id'))
                         ->by('created_at >',$date)
