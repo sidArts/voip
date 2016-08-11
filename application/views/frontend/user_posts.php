@@ -27,14 +27,14 @@
             <table id="postTable" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>Sl. no.</th>
-                    <th>Post type</th>
-                    <th>Country</th>
-                    <th>Rate (USD)</th>
-                    <th>Quality Level</div>
+                    <th class="text-center">Sl. no.</th>
+                    <th class="text-center">Post type</th>
+                    <th class="text-center">Country</th>
+                    <th class="text-center">Rate (USD)</th>
+                    <th class="text-center">Quality Level</div>
         <!--            <th>Description</th>-->
-                    <th>Viewed</th>
-                    <th>Date Created</th>
+                    <th class="text-center">Views</th>
+                    <th class="text-center">Date Created</th>
                     <th class="text-right">Action</th>
                     </tr>
                     </thead>
@@ -43,14 +43,14 @@
                         <?php $slno = 1; ?>
                         <?php foreach($posts as $value): ?>
                             <tr>
-                                <td><?php print $slno++; ?></td>
-                                <td><?php print $value->post_type; ?></td>
-                                <td><?php print $value->country; ?></td>
-                                <td><?php print $value->rate; ?></td>
-                                <td><?php print $value->quality_level; ?></td>
+                                <td class="text-center"><?php print $slno++; ?></td>
+                                <td class="text-center"><?php print $value->post_type; ?></td>
+                                <td class="text-center"><?php print $value->country; ?></td>
+                                <td class="text-center"><?php print $value->rate; ?></td>
+                                <td class="text-center"><?php print $value->quality_level; ?></td>
                                 <!--            <td>--><?php //print $value->description; ?><!--</td>-->
-                                <td class="text-center"><?php print $value->views; ?> times</td>
-                                <td><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
+                                <td class="text-center"><?php print $value->views; ?></td>
+                                <td class="text-center"><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
                                 <td class="text-right" style="width: 210px;">
                                     <a href="<?php print base_url(); ?>search/compare/<?php print $value->id; ?>" class="btn btn-info btn-xs">compare</a>
                                     <a href="<?php print base_url(); ?>posts/view/<?php print $value->id; ?>" class="btn btn-primary btn-xs">view more</a>

@@ -142,7 +142,8 @@ class Users extends MY_Controller{
             if($this->form_validation->run() == TRUE) {
                 $email = $this->input->post('email');
                 $password = sha1($this->input->post('password'));
-                $query = $this->db->query("SELECT * FROM `members` WHERE `email`='$email' AND `password`='$password'");
+                $binds = [$email, $password];
+                $query = $this->db->query("SELECT * FROM `members` WHERE `email`=? AND `password`=?", $binds);
                 $user = $query->row();
                 if(!empty($user)) {
                     if($user->is_verified == 1) {
@@ -156,7 +157,7 @@ class Users extends MY_Controller{
                         $this->session->set_flashdata('signin-success', 'Welcome '.$session_data['name'].'!..You have successfully logged in!');
                         redirect(base_url().'home');
                     } else {
-                        $this->session->set_flashdata('activate-msg', 'Please activate your account to continue login or <a class="btn btn-warning btn-xs" href="'. base_url() .'users/activationEmail/'. $user->id .'">click here</a> to resend email');
+                        $this->session->set_flashdata('activate-msg', 'Please activate your account to continue login or <a class="btn btn-warning btn-xs" href="'. base_url() .'users/activationEmail/'. $user->id .'">click here</a> to get activation email');
                         redirect(base_url().'users/signin');
                     }
                 } else {
@@ -170,6 +171,25 @@ class Users extends MY_Controller{
     public function info() {
         $this->check_session_exists();
         $user_id = $this->session->userdata('user_id');
+        $user = $this->member_model->get($user_id);
+        if($this->input->post('submit')):
+            $this->form_validation->set_rules('old-pwd','Current Password','required');
+            $this->form_validation->set_rules('new-pwd','New Password','required|min_length[4]');
+            $this->form_validation->set_rules('conf-new-pwd','Confirm Password','required|matches[new-pwd]|min_length[4]');
+            if($this->form_validation->run() == TRUE):
+                $curr_pwd = $this->input->post('old-pwd');
+                $new_pwd = $this->input->post('new-pwd');
+                if ($curr_pwd == $new_pwd):
+                    $data['error'] = 'Current Password is same as new password';
+                elseif (sha1($curr_pwd) != $user->password):
+                    $data['error'] = 'Current is password is incorrect';
+                else:
+                    $this->member_model->update($user_id, ['password' => sha1($new_pwd)]);
+                    $this->session->set_flashdata('password-update-success', 'Your password was updated successfully!');
+                    redirect(base_url('users/info'));
+                endif;
+            endif;
+        endif;
         $data['info'] = $this->member_model->get($user_id);
         $this->layout->render('frontend/user_info', $data);
     }
@@ -182,8 +202,6 @@ class Users extends MY_Controller{
             $this->form_validation->set_rules('name','Name','required');
             $this->form_validation->set_rules('email','Email','required');
             $this->form_validation->set_rules('referral','Referred By','email');
-//            $this->form_validation->set_rules('country-code','Country Code','required');
-//            $this->form_validation->set_rules('phone','Phone','required');
             if($this->form_validation->run() == TRUE) {
                 $form['name']     = $this->input->post('name');
                 $form['email']    = $this->input->post('email');
@@ -197,7 +215,7 @@ class Users extends MY_Controller{
                 } else {
                     $this->session->set_flashdata('prof-update-failure', 'Oops!..Something went wrong!');
                 }
-                redirect(base_url().'users/settings');
+                redirect(base_url().'users/info');
             }
         }
         $this->load->model("country_model");
@@ -205,17 +223,41 @@ class Users extends MY_Controller{
         $data['profile'] = $this->member_model->get($this->session->userdata('user_id'));
         $this->layout->render('frontend/signup',$data);
     }
-    public function show_hide_contact() {
+    public function changeEmailVisibility() {
         $this->check_session_exists();
         $user_id = $this->session->userdata('user_id');
-        $this->db->query("UPDATE `members` SET `show_contact_info` = IF(`show_contact_info`=0,1,0) WHERE id=$user_id");
+        $this->db->query("UPDATE `members` SET `email_visible` = IF(`email_visible`=0,1,0) WHERE id=$user_id");
+        $this->session->set_flashdata('visibility-email', 'Your Email visibility was changed');
         redirect(base_url().'users/info');
     }
-    public function deleteProfile() {
-        $this->layout->render('frontend/delete_member');
+    public function changePhoneVisibility() {
+        $this->check_session_exists();
+        $user_id = $this->session->userdata('user_id');
+        $this->db->query("UPDATE `members` SET `phone_visible` = IF(`phone_visible`=0,1,0) WHERE id=$user_id");
+        $this->session->set_flashdata('visibility-phone', 'Your Phone visibility was changed');
+        redirect(base_url().'users/info');
     }
-    public function updatePassword() {
-        $this->layout->render('frontend/update_user_pwd');
+    public function deactivateAccount() {
+        $this->check_session_exists();
+        $user_id = $this->session->userdata('user_id');
+        $this->db->query("UPDATE `members` SET `is_verified`=0 WHERE id='$user_id'");
+        $this->session->unset_userdata('user_id');
+        $this->session->unset_userdata('name');
+        $this->session->unset_userdata('email');
+        $this->session->set_userdata('logged_in', FALSE);
+        $this->session->set_flashdata('deactivate-flash', 'Your account is now deactivated!');
+        redirect(base_url());
+    }
+    public function deleteAccount() {
+        $this->check_session_exists();
+        $user_id = $this->session->userdata('user_id');
+        $this->db->query("DELETE FROM `members` WHERE id='$user_id'");
+        $this->session->unset_userdata('user_id');
+        $this->session->unset_userdata('name');
+        $this->session->unset_userdata('email');
+        $this->session->set_userdata('logged_in', FALSE);
+        $this->session->set_flashdata('delete-acc-flash', 'Your account is deleted!');
+        redirect(base_url());
     }
     public function logout() {
         $this->check_session_exists();

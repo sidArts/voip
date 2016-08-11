@@ -41,6 +41,20 @@
             <?php print $this->session->flashdata('login-warning'); ?>
         </div>
     <?php } ?>
+<!--   account deactivate-flash-->
+    <?php if($this->session->flashdata('deactivate-flash')): ?>
+        <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php print $this->session->flashdata('deactivate-flash'); ?>
+        </div>
+    <?php endif; ?>
+    <!--   account delete-flash-->
+    <?php if($this->session->flashdata('delete-acc-flash')): ?>
+        <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php print $this->session->flashdata('delete-acc-flash'); ?>
+        </div>
+    <?php endif; ?>
 </div>
 <style>
     .jumbotron{

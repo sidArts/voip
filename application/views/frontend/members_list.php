@@ -20,11 +20,11 @@
                 <thead>
                 <tr>
                     <th class="text-center">Sl. no.</th>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Joined at</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Company</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Phone</th>
+                    <th class="text-center">Joined at</th>
                     <th class="text-right">Action</th>
                 </tr>
                 </thead>
@@ -33,20 +33,30 @@
                 <?php foreach($members as $value): ?>
                 <tr>
                     <td class="text-center"><?php print $slno++; ?></td>
-                    <td><?php print $value->name; ?></td>
-                    <td><?php print $value->company; ?></td>
-                    <td>
-                        <?php if($value->show_contact_info == 1){
-                            print $value->email;
-                        } else { ?>
-                        <label class="label label-warning">hidden</label>
-                        <?php } ?>
+                    <td class="text-center"><?php print $value->name; ?></td>
+                    <td class="text-center"><?php print $value->company; ?></td>
+                    <td class="text-center">
+                        <?php
+                        if($value->email_visible):
+                            print ($value->email_visible)?$value->email: 'not provided';
+                        else:
+                            print '<i class="fa fa-eye-slash fa-lg"></i>';
+                        endif;
+                        ?>
                     </td>
-                    <td><?php print ($value->phone)?$value->phone: 'not provided'; ?></td>
-                    <td><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
+                    <td class="text-center">
+                    <?php
+                        if($value->phone_visible):
+                            print ($value->phone)?$value->phone: 'not provided';
+                        else:
+                            print '<i class="fa fa-eye-slash fa-lg"></i>';
+                        endif;
+                    ?>
+                    </td>
+                    <td class="text-center"><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
                     <td class="text-right">
-                        <?php if($value->show_contact_info == 0){ ?>
-                        <button class="btn btn-success btn-xs disabled">send email</button>
+                        <?php if($value->email_visible == 0){ ?>
+                        <button class="btn btn-success btn-xs disabled"><i class="glyphicon glyphicon-envelope"></i> send email</button>
                         <?php } else { ?>
                         <button class="btn btn-success btn-xs"
                                 user-email="<?php print $value->email; ?>"

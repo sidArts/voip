@@ -66,7 +66,7 @@
                                         <?php print $post->name ?>
                                     </p>
                                     <p class="pull-right">
-                                        <?php if($post->show_contact_info == 0) { ?>
+                                        <?php if($post->email_visible == 0) { ?>
                                             <button class="btn btn-success btn-xs disabled"><i class="glyphicon glyphicon-envelope"></i> send email</button>
                                         <?php } else { ?>
                                             <button class="btn btn-success btn-xs" user-email="<?php print $post->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal"><i class="glyphicon glyphicon-envelope"></i> send email</button>

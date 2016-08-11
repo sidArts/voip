@@ -2,7 +2,7 @@
 
 class Post_model extends My_Model {
     public function getWithUserId($id) {
-        $this->db->select('p.id as post_id, p.user_id,p.post_type,p.quality_level,p.rate,p.description,p.asr,p.acd,p.country,p.created_at,p.updated_at,p.views,p.status,m.name,m.email,m.show_contact_info');
+        $this->db->select('p.id as post_id, p.user_id,p.post_type,p.quality_level,p.rate,p.description,p.asr,p.acd,p.country,p.created_at,p.updated_at,p.views,p.status,m.name,m.email,m.email_visible,m.phone_visible');
         $this->db->from('posts as p');
         $this->db->join("members as m", "p.user_id=m.id");
         $this->db->where('p.id', $id);
@@ -10,7 +10,7 @@ class Post_model extends My_Model {
         return $query->row();
     }
     public function getAllWithUser($date) {
-        $this->db->select('p.id as post_id, p.user_id,p.post_type,p.quality_level,p.rate,p.description,p.asr,p.acd,p.country,p.created_at,p.updated_at,p.views,p.status,m.name,m.email,m.show_contact_info');
+        $this->db->select('p.id as post_id, p.user_id,p.post_type,p.quality_level,p.rate,p.description,p.asr,p.acd,p.country,p.created_at,p.updated_at,p.views,p.status,m.name,m.email,m.email_visible,m.phone_visible');
         $this->db->from('posts as p');
         $this->db->join("members as m", "p.user_id=m.id");
         $this->db->where('p.created_at >',$date);
