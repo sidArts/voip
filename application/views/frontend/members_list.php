@@ -16,15 +16,14 @@
                 <?php print $this->session->flashdata('contact-mail-failure'); ?>
             </div>
             <?php } ?>
-            <table id="membersListTable" class="table table-bordered table-hover">
+            <table id="membersListTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class="text-center">Sl. no.</th>
                     <th>Name</th>
-                    <th>Username</th>
                     <th>Company</th>
                     <th>Email</th>
-        <!--            <th>Phone</th>-->
+                    <th>Phone</th>
                     <th>Joined at</th>
                     <th class="text-right">Action</th>
                 </tr>
@@ -35,7 +34,6 @@
                 <tr>
                     <td class="text-center"><?php print $slno++; ?></td>
                     <td><?php print $value->name; ?></td>
-                    <td><?php print $value->username; ?></td>
                     <td><?php print $value->company; ?></td>
                     <td>
                         <?php if($value->show_contact_info == 1){
@@ -44,17 +42,17 @@
                         <label class="label label-warning">hidden</label>
                         <?php } ?>
                     </td>
-        <!--            <td>--><?php //print $value->phone; ?><!--</td>-->
+                    <td><?php print ($value->phone)?$value->phone: 'not provided'; ?></td>
                     <td><?php print date('F j, Y, g:i a',strtotime($value->created_at)); ?></td>
                     <td class="text-right">
                         <?php if($value->show_contact_info == 0){ ?>
-                        <button class="btn btn-success btn-xs disabled">contact</button>
+                        <button class="btn btn-success btn-xs disabled">send email</button>
                         <?php } else { ?>
                         <button class="btn btn-success btn-xs"
                                 user-email="<?php print $value->email; ?>"
                                 onclick="populateData(this);"
                                 data-toggle="modal"
-                                data-target="#contactModal">contact</button>
+                                data-target="#contactModal"><i class="glyphicon glyphicon-envelope"></i> send email</button>
                         <?php } ?>
                         <!--<a href="<?php /*echo base_url(); */?>users/info">view more</a>-->
                     </td>

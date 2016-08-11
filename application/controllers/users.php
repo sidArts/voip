@@ -59,9 +59,9 @@ class Users extends MY_Controller{
                 "rules" => 'required'
             ),
             array(
-                'field' => 'username',
-                'label' => 'Username',
-                'rules' => 'required|min_length[5]|max_length[20]|alpha_dash|is_unique[members.username]'
+                "field" => 'referral',
+                "label" => "Referred By",
+                "rules" => 'email'
             ),
             array(
                 'field' => 'terms',
@@ -69,6 +69,7 @@ class Users extends MY_Controller{
                 'rules' => 'required'
             )
         );
+
         $this->layout->setJs('https://www.google.com/recaptcha/api.js');
         if($this->input->post('submit')) {
             if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
@@ -82,7 +83,6 @@ class Users extends MY_Controller{
                             'name' => $this->input->post('name'),
                             'email' => $this->input->post('email'),
                             'password' => sha1($this->input->post('password')),
-                            'username' => $this->input->post('username'),
                             'company' => $this->input->post('company'),
                             'referral' => $this->input->post('referral')
                         );
@@ -137,18 +137,17 @@ class Users extends MY_Controller{
             redirect(base_url().'home/');
         }
         if($this->input->post('submit')) {
-            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if($this->form_validation->run() == TRUE) {
-                $username = $this->input->post('username');
+                $email = $this->input->post('email');
                 $password = sha1($this->input->post('password'));
-                $query = $this->db->query("SELECT * FROM `members` WHERE (`username`='$username' OR `email`='$username') AND `password`='$password'");
+                $query = $this->db->query("SELECT * FROM `members` WHERE `email`='$email' AND `password`='$password'");
                 $user = $query->row();
                 if(!empty($user)) {
                     if($user->is_verified == 1) {
                         $session_data = array(
                             'user_id' => $user->id,
-                            'username' => $user->username,
                             'name' => $user->name,
                             'email' => $user->email,
                             'logged_in' => true
@@ -161,7 +160,7 @@ class Users extends MY_Controller{
                         redirect(base_url().'users/signin');
                     }
                 } else {
-                    $this->session->set_flashdata('signin-failure', 'Oops! Invalid username or password');
+                    $this->session->set_flashdata('signin-failure', 'Oops! Invalid email or password');
                     redirect(base_url().'users/signin');
                 }
             }
@@ -181,15 +180,14 @@ class Users extends MY_Controller{
         $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         if($this->input->post('submit')) {
             $this->form_validation->set_rules('name','Name','required');
-            $this->form_validation->set_rules('username','Username','required');
             $this->form_validation->set_rules('email','Email','required');
+            $this->form_validation->set_rules('referral','Referred By','email');
 //            $this->form_validation->set_rules('country-code','Country Code','required');
 //            $this->form_validation->set_rules('phone','Phone','required');
             if($this->form_validation->run() == TRUE) {
                 $form['name']     = $this->input->post('name');
-                $form['username'] = $this->input->post('username');
                 $form['email']    = $this->input->post('email');
-                $form['company']  = $this->input->post('email');
+                $form['company']  = $this->input->post('company');
                 $form['referral'] = $this->input->post('referral');
                 if(!empty($this->input->post('country-code')) && !empty($this->input->post('phone'))) {
                     $form_fields['phone'] = $this->input->post('country-code').'-'.$this->input->post('phone');
@@ -213,10 +211,6 @@ class Users extends MY_Controller{
         $this->db->query("UPDATE `members` SET `show_contact_info` = IF(`show_contact_info`=0,1,0) WHERE id=$user_id");
         redirect(base_url().'users/info');
     }
-    public function settings() {
-        $this->check_session_exists();
-        $this->layout->render('frontend/member_settings');
-    }
     public function deleteProfile() {
         $this->layout->render('frontend/delete_member');
     }
@@ -227,7 +221,6 @@ class Users extends MY_Controller{
         $this->check_session_exists();
         $name = explode(' ',$this->session->userdata('name'))[0];
         $this->session->unset_userdata('user_id');
-        $this->session->unset_userdata('username');
         $this->session->unset_userdata('name');
         $this->session->unset_userdata('email');
         $this->session->set_userdata('logged_in', FALSE);

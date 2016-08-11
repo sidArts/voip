@@ -4,7 +4,6 @@ class Dashboard extends MY_Controller {
     {
         parent::__construct();
         $this->check_admin_session_exists();
-        $this->load->model('site_info_model');
         $this->load->model('post_model');
         $this->load->model('member_model');
     }
@@ -14,7 +13,7 @@ class Dashboard extends MY_Controller {
         $this->layout->render('backend/dashboard', $data);
     }
     public function siteInfo() {
-        $data['site_info'] = $this->site_info_model->by('id', 1)->get();
+        $data['site_info'] = $this->site;
         $this->layout->render('backend/site_info', $data);
     }
     public function editInfo() {
@@ -54,7 +53,7 @@ class Dashboard extends MY_Controller {
         }
         $this->load->helper('form');
         $this->layout->setJs('http://cdn.ckeditor.com/4.5.10/standard/ckeditor.js');
-        $data['site_info'] = $this->site_info_model->by('id', 1)->get();
+        $data['site_info'] = $this->site;
         $this->layout->render('backend/edit_site_info', $data);
     }
     public function uploadImage(){

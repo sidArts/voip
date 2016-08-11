@@ -14,13 +14,13 @@
                 <?php print $this->session->flashdata('contact-mail-failure'); ?>
             </div>
         <?php } ?>
-        <div class="col-lg-5">
+        <div class="col-lg-7">
             <div class="panel panel-primary" style="margin-top: 5px;">
                 <div class="panel-heading">
                     <h1>Post Details</h1>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-hover">
+                    <table class="table table-striped table-hover">
                         <tr>
                             <th>Post Type</th>
                             <td><?php print $post->post_type; ?></td>
@@ -34,24 +34,24 @@
                             <td><?php print $post->country ?></td>
                         </tr>
                         <tr>
-                            <th>ASR</th>
+                            <th>ASR (%)</th>
                             <td><?php print $post->asr ?></td>
                         </tr>
                         <tr>
-                            <th>ACD</th>
+                            <th>ACD (min)</th>
                             <td><?php print $post->acd ?></td>
                         </tr>
                         <tr>
-                            <th>Rate</th>
+                            <th>Rate (USD)</th>
                             <td><?php print $post->rate ?></td>
                         </tr>
                         <tr>
-                            <th>Views</th>
-                            <td><?php print $post->views ?></td>
+                            <th>Viewed</th>
+                            <td><?php print $post->views ?> times</td>
                         </tr>
                         <tr>
                             <th>Description</th>
-                            <td><?php print ($post->description) ? $post->description : 'not available' ?></td>
+                            <td><?php print ($post->description) ? $post->description : 'No Further Description' ?></td>
                         </tr>
                         <tr>
                             <th>Date Added</th>
@@ -63,13 +63,13 @@
                                 <th>Posted By</th>
                                 <td>
                                     <p class="pull-left">
-                                        <?php print $post->username ?> (<?php print $post->name ?>)
+                                        <?php print $post->name ?>
                                     </p>
                                     <p class="pull-right">
                                         <?php if($post->show_contact_info == 0) { ?>
-                                            <button class="btn btn-success btn-xs disabled">contact</button>
+                                            <button class="btn btn-success btn-xs disabled"><i class="glyphicon glyphicon-envelope"></i> send email</button>
                                         <?php } else { ?>
-                                            <button class="btn btn-success btn-xs" user-email="<?php print $post->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal">contact</button>
+                                            <button class="btn btn-success btn-xs" user-email="<?php print $post->email; ?>" onclick="populateData(this);" data-toggle="modal" data-target="#contactModal"><i class="glyphicon glyphicon-envelope"></i> send email</button>
                                         <?php } ?>
                                     </p>
                                 </td>
@@ -94,7 +94,7 @@
                 <h4 class="modal-title">Contact Member</h4>
             </div>
             <div class="modal-body">
-                <?php print form_open(base_url().'posts/view/'.$post->id, array('name' => 'contact')); ?>
+                <?php print form_open(base_url().'posts/view/'.$post->post_id, array('name' => 'contact')); ?>
                 <div class="form-group">
                     <?php
                     $input['name'] = 'email';

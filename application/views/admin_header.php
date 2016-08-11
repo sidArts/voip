@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php print base_url(); ?>admin">VOIP - Dashboard</a>
+            <a class="navbar-brand" href="<?php print base_url(); ?>admin"><?php print $site->site_name; ?> - Dashboard</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -19,11 +19,11 @@
                     <i class="fa fa-user fa-fw"></i> <?php print $this->session->userdata('admin_name'); ?> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
+<!--                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Profile</a>-->
+<!--                    </li>-->
+<!--                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
+<!--                    </li>-->
+<!--                    <li class="divider"></li>-->
                     <li><a href="<?php print base_url() ?>admin/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>

@@ -58,8 +58,8 @@ class Posts extends MY_Controller {
                 'rules' => 'required'
             ]
         ];
-        $this->form_validation->set_rules($rules);
         if($this->input->post('submit')) {
+            $this->form_validation->set_rules($rules);
             if($this->form_validation->run() == TRUE) {
                 $formfields = [
                     'post_type' => $this->input->post('post-type'),
@@ -116,7 +116,7 @@ class Posts extends MY_Controller {
         if($this->post_model->delete($id)) {
             $this->session->set_flashdata('post-del-flash','Post deleted!');
         } else {
-            $this->session->set_flashdata('post-del-fail-flash','Post deleted!');
+            $this->session->set_flashdata('post-del-fail-flash','Oops! Somethong went wrong...');
         }
         redirect(base_url().'posts');
     }

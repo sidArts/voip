@@ -11,12 +11,14 @@ class MY_Controller extends CI_Controller {
         $this->layout->setDefaultCss(array(
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
             'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
-            base_url().'assets/css/jquery.dataTables.min.css'
+            'https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css'
+            /*base_url().'assets/css/jquery.dataTables.min.css'*/
         ));
         $this->layout->setDefaultJs(array(
             base_url().'assets/js/jquery.js',
             base_url().'assets/js/bootstrap.js',
-            base_url().'assets/js/jquery.dataTables.min.js'
+            base_url().'assets/js/jquery.dataTables.min.js',
+            'https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'
         ));
         if($this->uri->segment(1) == 'admin') {
             $this->layout->setTitle($this->site->site_title.' : Admin Dashboard');

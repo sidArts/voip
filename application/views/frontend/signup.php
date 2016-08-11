@@ -47,19 +47,6 @@
                     print form_input($input); ?>
                     <?php print form_error('name'); ?>
                 </div>
-                <div class="form-group">
-                    <?php print form_label('Username'); ?>
-                    <?php
-                    $input['name'] = 'username';
-                    $input['class'] = 'form-control';
-                    if($page1 == 'updateProfile'){
-                        $input['value'] = $profile->username;
-                    } else {
-                        $input['value'] = set_value('username');
-                    }
-                    print form_input($input); ?>
-                    <?php print form_error('username'); ?>
-                </div>
                 <?php if($page1 != 'updateProfile'){ ?>
                     <div class="form-group">
                         <?php print form_label('Password'); ?>
@@ -91,7 +78,7 @@
                     print form_error('company'); ?>
                 </div>
                 <div class="form-group">
-                    <?php  print form_label('Referral');
+                    <?php  print form_label('Referred By (Email Address) ');
                     $input['name'] = 'referral';
                     $input['class'] = 'form-control';
                     if($page1 == 'updateProfile'){

@@ -35,6 +35,7 @@
                         '' => '-- Select Quality Level --',
                         'CLI' => 'CLI',
                         'Non-CLI' => 'Non-CLI',
+                        'CC' => 'CC',
                         'PREMIUM' => 'PREMIUM'
                     ),'','class="form-control"'); ?>
                     <?php print form_error('quality'); ?>
@@ -43,19 +44,19 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <?php print form_label('ASR');?>
+                            <?php print form_label('ASR (%)');?>
                             <?php print form_input(array(
                                 'name' => 'asr',
                                 'class' => 'form-control',
-                                'placeholder' => 'Answer-Seizure ratio'
+                                'placeholder' => 'Answer-Seizure Ratio'
                             )) ?>
                         </div>
                         <div class="col-lg-6">
-                            <?php print form_label('ACD');?>
+                            <?php print form_label('ACD (min)');?>
                             <?php print form_input(array(
                                 'name' => 'acd',
                                 'class' => 'form-control',
-                                'placeholder' => 'Accurate call duration'
+                                'placeholder' => 'Accurate Call Duration'
                             )) ?>
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                     <?php print form_error('acd'); ?>
                 </div>
                 <div class="form-group">
-                    <?php print form_label('Enter Rate'); ?>
+                    <?php print form_label('Enter Rate (USD)'); ?>
                     <?php print form_input(array(
                         'name' => 'rate',
                         'class' => 'form-control'

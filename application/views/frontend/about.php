@@ -57,7 +57,7 @@
     </div>
 <div class="container" style="width: 80%;">
 <!--    <h1 class="page-header text-center">Welcome to VOIP</h1>-->
-    <div class="bg-info" style="padding: 20px; margin-bottom: 5px;">
+    <div class="bg-info1" style="padding: 20px; margin-bottom: 5px;">
         <?php print $site->site_about ?>
     </div>
     <div>

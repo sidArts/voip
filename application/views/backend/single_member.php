@@ -19,11 +19,7 @@
                         </tr>
                         <tr>
                             <th>Phone</th>
-                            <td><?php print ($member->phone) ? $member->phone : 'not available'; ?></td>
-                        </tr>
-                        <tr>
-                            <th>Username</th>
-                            <td><?php print $member->username ?></td>
+                            <td><?php print ($member->phone) ? $member->phone : 'not provided'; ?></td>
                         </tr>
                         <tr>
                             <th>Date Joined</th>
@@ -35,6 +31,12 @@
                             <th>Last Updated</th>
                             <td>
                                 <?php print date('F j, Y, g:i a', strtotime($member->updated_at)); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Referred By</th>
+                            <td>
+                                <?php print ($member->referral) ? $member->referral : 'none'; ?>
                             </td>
                         </tr>
                         <tr>

@@ -6,7 +6,7 @@
                     <h2 class="page-header">
                     Posted By
                     <strong>
-                        <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name.' ('.$post->username.')' ?></a>
+                        <a href="<?php print base_url() ?>admin/members/info/<?php print $post->user_id ?>"><?php print $post->name ?></a>
                     </strong>
                     </h2>
                 </div>
@@ -35,10 +35,6 @@
                         <tr>
                             <th>Rate</th>
                             <td><?php print $post->rate ?></td>
-                        </tr>
-                        <tr>
-                            <th>Views</th>
-                            <td><?php print $post->views ?></td>
                         </tr>
                         <tr>
                             <th>Description</th>

@@ -38,9 +38,9 @@
                 <legend><h2>Signin Form</h2></legend>
                 <?php print form_open(base_url().'users/signin'); ?>
                 <div class="form-group">
-                    <?php print form_label('Username or Email') ?>
+                    <?php print form_label('Email') ?>
                     <?php print form_input(array(
-                        'name' => 'username',
+                        'name' => 'email',
                         'class' => 'form-control'
                     )); ?>
                     <?php print form_error('username'); ?>

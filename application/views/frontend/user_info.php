@@ -25,10 +25,6 @@ $user_id = $this->session->userdata('user_id');
                                 <td><?php print $info->name; ?></td>
                             </tr>
                             <tr>
-                                <th>Username</th>
-                                <td><?php print $info->username; ?></td>
-                            </tr>
-                            <tr>
                                 <th>Company</th>
                                 <td><?php print (!$info->company)? 'Not mentioned':$info->company; ?></td>
                             </tr>
@@ -41,8 +37,8 @@ $user_id = $this->session->userdata('user_id');
                                 <td><?php print date('F j, Y, g:i a',strtotime($info->updated_at)); ?></td>
                             </tr>
                             <tr>
-                                <th>Referral</th>
-                                <td><?php print ($info->referral) ? $info->referral : 'not available'; ?></td>
+                                <th>Referred By</th>
+                                <td><?php print ($info->referral) ? $info->referral : 'None'; ?></td>
                             </tr>
                         </table>
                     </div>

@@ -24,16 +24,16 @@
                     <?php print $this->session->flashdata('post-del-flash'); ?>
                 </div>
             <?php } ?>
-            <table id="postTable" class="table table-bordered">
+            <table id="postTable" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>Sl. no.</th>
                     <th>Post type</th>
                     <th>Country</th>
-                    <th>Rate</th>
+                    <th>Rate (USD)</th>
                     <th>Quality Level</div>
         <!--            <th>Description</th>-->
-                    <th>Views</th>
+                    <th>Viewed</th>
                     <th>Date Created</th>
                     <th class="text-right">Action</th>
                     </tr>
@@ -49,7 +49,7 @@
                                 <td><?php print $value->rate; ?></td>
                                 <td><?php print $value->quality_level; ?></td>
                                 <!--            <td>--><?php //print $value->description; ?><!--</td>-->
-                                <td class="text-center"><?php print $value->views; ?></td>
+                                <td class="text-center"><?php print $value->views; ?> times</td>
                                 <td><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
                                 <td class="text-right" style="width: 210px;">
                                     <a href="<?php print base_url(); ?>search/compare/<?php print $value->id; ?>" class="btn btn-info btn-xs">compare</a>
