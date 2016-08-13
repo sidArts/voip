@@ -27,6 +27,9 @@ class Auth extends CI_Controller {
                     $this->session->set_userdata($session_vars);
                     $this->session->set_flashdata('admin-login-success', 'Login success!');
                     redirect(base_url().'admin/dashboard');
+                } else {
+                    $this->session->set_flashdata('admin-login-failure', 'Failed! Incorrect Login Credentials!');
+                    redirect(base_url().'admin/auth');
                 }
             }
         }

@@ -14,6 +14,7 @@ class Posts extends MY_Controller {
     public function index() {
         $this->db->order_by('created_at','desc');
         $date = date("Y-m-d", strtotime("-$this->post_day_limit day"));
+        $data['post_time_limit'] = $this->post_day_limit;
         $data['posts'] = $this->post_model
                         ->by('user_id', $this->session->userdata('user_id'))
                         ->by('created_at >',$date)
@@ -83,9 +84,9 @@ class Posts extends MY_Controller {
         }
         $this->load->helper('form');
         $this->load->model('country_model');
-        $countries = $this->country_model->get_all();
-        $view = $this->parser->parse('frontend/add_post', ['countries' => $countries], true);
-        $this->layout->render($view);
+        $data['post_time_limit'] = $this->post_day_limit;
+        $data['breakouts'] = $this->db->get('country_breakouts')->result();
+        $this->layout->render('frontend/add_post', $data);
     }
     public function view($id) {
         $this->check_if_postid_exist($id);

@@ -21,13 +21,17 @@
                         <div class="pull-left">
                             <h1 class="page-header">Site Members</h1>
                         </div>
+
                         <div class="pull-right">
-                            <input type="button"
-                                   class="btn btn-default btn-sm page-header"
+                            <a href="<?php print base_url('Parse.php'); ?>"
+                               class="btn btn-success page-header">Export to File
+                            </a>
+                            <button type="button"
+                                   class="btn btn-warning page-header"
                                    data-toggle="modal"
                                    data-target="#emailModal"
-                                   value="Compose Message"
-                                   id="compose">
+                                   id="compose">Compose Message
+                            </button>
                         </div>
                     </div>
                 </div>

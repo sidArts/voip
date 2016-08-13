@@ -6,17 +6,17 @@
 
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Note :</strong> Posts older than 10 days will be automatically erased!
+                <strong>Note :</strong> Posts older than <?php print $post_time_limit; ?> days will be automatically erased!
             </div>
             <div class="well">
             <?php print form_open(base_url().'posts/add'); ?>
                 <div class="form-group">
-                    <?php print form_label('Select Destination'); ?>
+                    <?php print form_label('Select Breakout Destination'); ?>
                     <select class="form-control" name="country">
-                        <option value="">-- Select Country --</option>
-                        {countries}
-                        <option value="{nicename}">{nicename}</option>
-                        {/countries}
+                        <option value="">-- Select Breakout --</option>
+                        <?php foreach ($breakouts as $value): ?>
+                        <option value="<?php print $value->name; ?>"><?php print $value->name; ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <?php print form_error('country'); ?>
                 </div>

@@ -16,7 +16,10 @@ class Posts extends MY_Controller {
         $this->layout->render('backend/single_post', $data);
     }
     public function delete($id) {
-        $this->check_if_postid_exist($id);
+        $data = $this->post_model->getWithUserId($id);
+        if(empty($data)) {
+            $this->show_404();
+        }
         if($this->post_model->delete($id)) {
             $this->session->set_flashdata('post-del-flash','Post deleted!');
         } else {

@@ -16,7 +16,7 @@
                             <td><?php print $post->quality_level ?></td>
                         </tr>
                         <tr>
-                            <th>Country</th>
+                            <th>Breakout Destination</th>
                             <td><?php print $post->country ?></td>
                         </tr>
                         <tr>

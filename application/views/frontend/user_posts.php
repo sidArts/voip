@@ -4,7 +4,7 @@
         <div class="col-lg-10">
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Note :</strong> Posts older than 10 days will be automatically erased!
+                <strong>Note :</strong> Posts older than <?php print $post_time_limit; ?> days will be automatically erased!
             </div>
             <?php if($this->session->flashdata('post-success')) { ?>
                 <div class="alert alert-success">
@@ -29,7 +29,7 @@
                 <tr>
                     <th class="text-center">Sl. no.</th>
                     <th class="text-center">Post type</th>
-                    <th class="text-center">Country</th>
+                    <th class="text-center">Breakout Destination</th>
                     <th class="text-center">Rate (USD)</th>
                     <th class="text-center">Quality Level</div>
         <!--            <th>Description</th>-->
@@ -52,13 +52,13 @@
                                 <td class="text-center"><?php print $value->views; ?></td>
                                 <td class="text-center"><?php print date('F j, Y, g:i a', strtotime($value->created_at)); ?></td>
                                 <td class="text-right" style="width: 210px;">
-                                    <a href="<?php print base_url(); ?>search/compare/<?php print $value->id; ?>" class="btn btn-info btn-xs">compare</a>
+                                    <a href="<?php print base_url(); ?>search/compare/<?php print $value->id; ?>" class="btn btn-info btn-xs">matching engine</a>
                                     <a href="<?php print base_url(); ?>posts/view/<?php print $value->id; ?>" class="btn btn-primary btn-xs">view more</a>
-                                    <?php if($value->status == 1) { ?>
-                                        <a href="<?php print base_url(); ?>posts/change_status/<?php print $value->id; ?>" onclick="return statusConfirm()" class="btn btn-success btn-xs">active</a>
-                                    <?php } else { ?>
-                                        <a href="<?php print base_url(); ?>posts/change_status/<?php print $value->id; ?>" onclick="return confirm('Are you sure want to make it active?')" class="btn btn-warning btn-xs">inactive</a>
-                                    <?php } ?>
+                                    <?php /*if($value->status == 1) { */?><!--
+                                        <a href="<?php /*print base_url(); */?>posts/change_status/<?php /*print $value->id; */?>" onclick="return statusConfirm()" class="btn btn-success btn-xs">active</a>
+                                    <?php /*} else { */?>
+                                        <a href="<?php /*print base_url(); */?>posts/change_status/<?php /*print $value->id; */?>" onclick="return confirm('Are you sure want to make it active?')" class="btn btn-warning btn-xs">inactive</a>
+                                    --><?php /*} */?>
                                     <a href="<?php print base_url(); ?>posts/delete/<?php print $value->id; ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure want ot delete?');"><i class="glyphicon glyphicon-remove"></i></a>
                                 </td>
                             </tr>

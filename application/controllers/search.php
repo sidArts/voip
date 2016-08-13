@@ -19,7 +19,6 @@ class Search extends MY_Controller {
             $this->show_404();
         }
         $data['results'] = $this->post_model->compare($post_id);
-        $data['countries'] = $this->db->get('country')->result();
-        $this->layout->render('frontend/search_form', $data);
+        $this->layout->render('frontend/compare_results', $data);
     }
 }

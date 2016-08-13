@@ -16,6 +16,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
+            <?php if ($this->session->flashdata('admin-login-failure')): ?>
+            <div class="alert alert-danger" style="margin-top: 10px">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <?php print $this->session->flashdata('admin-login-failure'); ?>
+            </div>
+            <?php endif; ?>
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please Sign In</h3>
