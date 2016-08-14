@@ -138,11 +138,13 @@
                     <?php echo form_error('country-code'); ?>
                     <?php echo form_error('phone'); ?>
                 </div>
+                <?php if($page1 != 'updateProfile') : ?>
                 <div class="form-group">
                     <?php print form_label('<img src="'. base_url('users/gen_captcha_image') .'">');
                     print form_input(array('name' => 'captcha', 'class' => 'form-control', 'placeholder' => 'Enter Captcha Code'));
                     print form_error('captcha')?>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php if($page1 != 'updateProfile') { ?>

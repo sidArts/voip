@@ -22,6 +22,18 @@
                 <?php print $this->session->flashdata('admin-login-failure'); ?>
             </div>
             <?php endif; ?>
+            <?php if ($this->session->flashdata('email-not-found-flash')): ?>
+                <div class="alert alert-danger" style="margin-top: 10px">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <?php print $this->session->flashdata('email-not-found-flash'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($this->session->flashdata('pwd-res-success')): ?>
+                <div class="alert alert-success" style="margin-top: 10px">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <?php print $this->session->flashdata('pwd-res-success'); ?>
+                </div>
+            <?php endif; ?>
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please Sign In</h3>
@@ -57,11 +69,16 @@
                         </fieldset>
                     <?php form_close() ?>
                 </div>
+                <div style="margin-left: 30px;">
+                    <p class="form-group text-muted">
+                        Forgot your password?
+                        <?php print anchor(base_url('admin/auth/forgotPassword'),'click here','class="btn btn-default btn-xs"') ?>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 
 </html>

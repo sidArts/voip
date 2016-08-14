@@ -24,6 +24,7 @@
 <!--                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
 <!--                    </li>-->
 <!--                    <li class="divider"></li>-->
+                    <li><a href="<?php print base_url() ?>admin/dashboard/profile"><i class="fa fa-user fa-fw"></i> view profile</a>
                     <li><a href="<?php print base_url() ?>admin/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>

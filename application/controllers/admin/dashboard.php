@@ -7,11 +7,11 @@ class Dashboard extends MY_Controller {
         $this->load->model('post_model');
         $this->post_day_limit = $this->post_model->getPostDays();
         $this->load->model('member_model');
-    }
-    public function index() {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">', '</div>');
+    }
+    public function index() {
         if($this->input->post('post-days')):
             $this->form_validation->set_rules('post-days','Post Day Limit','required|integer');
             if($this->form_validation->run()):
@@ -34,7 +34,6 @@ class Dashboard extends MY_Controller {
         $this->layout->render('backend/site_info', $data);
     }
     public function editInfo() {
-        $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="help-block alert-danger">','</div>');
         if($this->input->post('submit')) {
             $this->form_validation->set_rules('title','Site Title','required');
@@ -68,7 +67,6 @@ class Dashboard extends MY_Controller {
                 }
             }
         }
-        $this->load->helper('form');
         $this->layout->setJs('http://cdn.ckeditor.com/4.5.10/standard/ckeditor.js');
         $data['site_info'] = $this->site;
         $this->layout->render('backend/edit_site_info', $data);
@@ -86,7 +84,28 @@ class Dashboard extends MY_Controller {
         }
         return $data;
     }
-    public function setPostDays() {
-
+    public function profile() {
+        $this->load->model('admin_model');
+        $data['admin'] = $this->admin_model->get($this->session->userdata('admin_id'));
+        if ($this->input->post('submit')):
+            $this->form_validation->set_rules('curr-pwd','Current Password','required');
+            $this->form_validation->set_rules('new-pwd','New Password','required|min_length[4]');
+            $this->form_validation->set_rules('conf-pwd','Confirm Password','required|matches[new-pwd]');
+            if ($this->form_validation->run() == TRUE):
+                $cur_pwd = $this->input->post('curr-pwd');
+                $new_pwd = $this->input->post('new-pwd');
+                if($data['admin']->password == sha1($cur_pwd)):
+                    if($this->admin_model->update($data['admin']->id, ['password' => sha1($new_pwd)])):
+                        $this->session->set_flashdata('pwd-update-success','Password Updated successfully!');
+                    else:
+                        $this->session->set_flashdata('pwd-update-fail','Oop!..Something went wrong!!');
+                    endif;
+                    redirect(base_url('admin/dashboard/profile'));
+                else:
+                    $data['error'] = 'Incorrect current password!';
+                endif;
+            endif;
+        endif;
+        $this->layout->render('backend/admin_profile', $data);
     }
 }
